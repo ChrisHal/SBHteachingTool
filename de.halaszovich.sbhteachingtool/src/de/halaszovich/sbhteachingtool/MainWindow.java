@@ -50,7 +50,7 @@ public class MainWindow implements ChangeListener {
 	static final double tot = 0.048; // total buffer base = [A-]+[HA]
 	static final double stdSID = 0.04796; // strong ion differenz, tailored to make HA=0.024 for std. conditions
 	static final double CO2concToPressure = 33333.3; // factor to convert mol/L to mmHg
-//	private static final String APPNAME = "S�ure Base Demo";
+//	private static final String APPNAME = "Säure Base Demo";
 	private JPanel panelControls;
 
 
@@ -275,7 +275,7 @@ public class MainWindow implements ChangeListener {
 				sliderSBE.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
-				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>simulieren eine respiratorische Azidose oder Kompensation<br>einer metabol. Alkalose,<br>kleinere Werte (Hyperventilation) eine Alkalose oder die Kompensation einer<br>metabol. Azidose.</html>");
+				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>simulieren eine respiratorische Azidose oder Kompensation<br>einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>die Kompensation einer metabol. Azidose.</html>");
 				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
 				sliderLabel2.setBounds(48, 116, 269, 32);
 				sliderLabel2.setEditable(false);
@@ -325,7 +325,7 @@ public class MainWindow implements ChangeListener {
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
 		JPanel panel = new JPanel();
-//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel);
+//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
 		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
 		
 	}
