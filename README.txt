@@ -1,4 +1,4 @@
-This tool is intended to help tecching med-school students about
+This tool is intended to help teaching med-school students about
 acid base balance disturbances and corrections thereof.
 
 Christian R. Halaszovich MD
