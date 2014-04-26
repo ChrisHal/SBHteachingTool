@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -207,6 +208,7 @@ public class MainWindow implements ChangeListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ToolTipManager.sharedInstance().setDismissDelay(10000); // display tooltips for 10 sec
 		final int height=510;
 		frmSBDemo = new JFrame();
 		frmSBDemo.setTitle("S\u00E4ure Base Demo");
