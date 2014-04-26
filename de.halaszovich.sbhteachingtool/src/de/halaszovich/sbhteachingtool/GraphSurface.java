@@ -196,6 +196,7 @@ public class GraphSurface extends JPanel {
 		g2d.drawString(leftlabel, labelx, labely);
 		labelx=pxRight-fm.stringWidth(rightlabel);
 		g2d.drawString(rightlabel, labelx, labely);
+		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
 		g2d.drawLine(stdX, pxTop, stdX, pxBottom);
 		g2d.drawString("BE", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
 		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_BE,MAX_BE);
@@ -205,16 +206,15 @@ public class GraphSurface extends JPanel {
 		labely=pxTop+fm.getAscent();
 		g2d.drawString(toplabel, labelx, labely);
 		labely=pxBottom-fm.getDescent();
-		g2d.drawString(bottomlabel, labelx, labely);
+		g2d.drawString(bottomlabel, labelx, labely);	
 		stdY=yscale.scale(STD_BE);
 		g2d.drawLine(pxLeft,stdY,pxRight,stdY);
 		g2d.setStroke(oldstroke);
 		yValue=Parent.getBE();
 		pxY=yscale.scale(yValue);
-		
 		g2d.drawLine(pxLeft, pxBottom, pxLeft, pxTop);
 		g2d.drawLine(pxLeft, pxBottom, pxRight, pxBottom);
-		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
+		
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.be,xscale,yscale);
 		
