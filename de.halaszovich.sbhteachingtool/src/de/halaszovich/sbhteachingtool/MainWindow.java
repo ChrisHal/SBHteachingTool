@@ -2,7 +2,6 @@ package de.halaszovich.sbhteachingtool;
 
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,6 +22,9 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver;
 import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 
 public class MainWindow implements ChangeListener {
@@ -217,10 +219,20 @@ public class MainWindow implements ChangeListener {
 		frmSBDemo.setTitle("S\u00E4ure Base Demo");
 		frmSBDemo.setBounds(100, 100, 708, height);
 		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
-		frmSBDemo.getContentPane().setLayout(new GridLayout(1, 2, 0, 0));
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{316, 346, 0};
+		gridBagLayout.rowHeights = new int[]{450, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		frmSBDemo.getContentPane().setLayout(gridBagLayout);
 		
 		panelControls = new JPanel();
-		frmSBDemo.getContentPane().add(panelControls);
+		GridBagConstraints gbc_panelControls = new GridBagConstraints();
+		gbc_panelControls.fill = GridBagConstraints.BOTH;
+		gbc_panelControls.insets = new Insets(0, 0, 0, 5);
+		gbc_panelControls.gridx = 0;
+		gbc_panelControls.gridy = 0;
+		frmSBDemo.getContentPane().add(panelControls, gbc_panelControls);
 		panelControls.setLayout(null);
 		panelControls.setPreferredSize(null);
 		
@@ -230,72 +242,70 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
 		txtLabelSliderSBE.setBounds(48, 24, 269, 32);
 		panelControls.add(txtLabelSliderSBE);
-//		uncomment to get center aligned text
-//		SimpleAttributeSet aSet = new SimpleAttributeSet();
-//        StyleConstants.setAlignment(aSet, StyleConstants.ALIGN_CENTER);
-//        StyledDocument doc = txtLabelSliderSBE.getStyledDocument();
-//        doc.setParagraphAttributes(0, 100, aSet, false);
+		//		uncomment to get center aligned text
+		//		SimpleAttributeSet aSet = new SimpleAttributeSet();
+		//        StyleConstants.setAlignment(aSet, StyleConstants.ALIGN_CENTER);
+		//        StyledDocument doc = txtLabelSliderSBE.getStyledDocument();
+		//        doc.setParagraphAttributes(0, 100, aSet, false);
+				
+				this.lblpH = new JLabel("pH: NaN");
+				lblpH.setBounds(95, 331, 180, 16);
+				panelControls.add(lblpH);
+				
+				this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
+				lblHCO3.setBounds(95, 273, 180, 16);
+				panelControls.add(lblHCO3);
+				
+				this.lblBE = new JLabel("BE x mmol/L");
+				lblBE.setBounds(95, 302, 180, 16);
+				panelControls.add(lblBE);
+				
+				this.lblpCO2 = new JLabel("pCO2");
+				lblpCO2.setBounds(95, 244, 180, 16);
+				panelControls.add(lblpCO2);
+				
+				this.lblCO2 = new JLabel("CO2: x mmol/L");
+				lblCO2.setBounds(95, 215, 180, 16);
+				panelControls.add(lblCO2);
+				
+				sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
+				sliderSBE.setBounds(38, 56, 269, 52);
+				panelControls.add(sliderSBE);
+				sliderSBE.addChangeListener(this);
+				//Turn on labels at major tick marks.
+				sliderSBE.setMajorTickSpacing(5);
+				sliderSBE.setMinorTickSpacing(1);
+				sliderSBE.setPaintTicks(true);
+				sliderSBE.setPaintLabels(true);
+				
+				JTextPane sliderLabel2 = new JTextPane();
+				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
+				sliderLabel2.setBounds(48, 116, 269, 32);
+				sliderLabel2.setEditable(false);
+				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
+				panelControls.add(sliderLabel2);
+				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+				
+				this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
+				sliderCO2.setBounds(38, 148, 269, 52);
+				panelControls.add(sliderCO2);
+				sliderCO2.addChangeListener(this);
+				//Turn on labels at major tick marks.
+				sliderCO2.setMajorTickSpacing(10);
+				sliderCO2.setMinorTickSpacing(1);
+				sliderCO2.setPaintTicks(true);
+				sliderCO2.setPaintLabels(true);
+				
+				JButton btnReset = new JButton("reset");
+				btnReset.setBounds(79, 374, 164, 29);
+				panelControls.add(btnReset);
+				btnReset.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						resetValues();
+					}
+				});
 		
-		this.lblpH = new JLabel("pH: NaN");
-		lblpH.setBounds(95, 331, 180, 16);
-		panelControls.add(lblpH);
-		
-		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
-		lblHCO3.setBounds(95, 273, 180, 16);
-		panelControls.add(lblHCO3);
-		
-		this.lblBE = new JLabel("BE x mmol/L");
-		lblBE.setBounds(95, 302, 180, 16);
-		panelControls.add(lblBE);
-		
-		this.lblpCO2 = new JLabel("pCO2");
-		lblpCO2.setBounds(95, 244, 180, 16);
-		panelControls.add(lblpCO2);
-		
-		this.lblCO2 = new JLabel("CO2: x mmol/L");
-		lblCO2.setBounds(95, 215, 180, 16);
-		panelControls.add(lblCO2);
-		
-		sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
-		sliderSBE.setBounds(38, 56, 269, 52);
-		panelControls.add(sliderSBE);
-		sliderSBE.addChangeListener(this);
-		//Turn on labels at major tick marks.
-		sliderSBE.setMajorTickSpacing(5);
-		sliderSBE.setMinorTickSpacing(1);
-		sliderSBE.setPaintTicks(true);
-		sliderSBE.setPaintLabels(true);
-		
-		JTextPane sliderLabel2 = new JTextPane();
-		sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
-		sliderLabel2.setBounds(48, 116, 269, 32);
-		sliderLabel2.setEditable(false);
-		sliderLabel2.setBackground(UIManager.getColor("Label.background"));
-		panelControls.add(sliderLabel2);
-		sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-		this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-		sliderCO2.setBounds(38, 148, 269, 52);
-		panelControls.add(sliderCO2);
-		sliderCO2.addChangeListener(this);
-		//Turn on labels at major tick marks.
-		sliderCO2.setMajorTickSpacing(10);
-		sliderCO2.setMinorTickSpacing(1);
-		sliderCO2.setPaintTicks(true);
-		sliderCO2.setPaintLabels(true);
-		
-		JButton btnReset = new JButton("reset");
-		btnReset.setBounds(79, 374, 164, 29);
-		panelControls.add(btnReset);
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				resetValues();
-			}
-		});
-		
-//		JPanel panel = new JPanel();
-//		frmSBDemo.getContentPane().add(panel);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		frmSBDemo.setJMenuBar(menuBar);
 		
@@ -311,7 +321,14 @@ public class MainWindow implements ChangeListener {
 		mnDatei.add(mntmberSureBase);
 
 		this.graphSurface=new GraphSurface(this, 10,10,10,10,10);
-		frmSBDemo.getContentPane().add(graphSurface);
+		//frmSBDemo.getContentPane().add(graphSurface);
+		//		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 0;
+		frmSBDemo.getContentPane().add(graphSurface, gbc_panel);
+		
 		
 	}
 }
