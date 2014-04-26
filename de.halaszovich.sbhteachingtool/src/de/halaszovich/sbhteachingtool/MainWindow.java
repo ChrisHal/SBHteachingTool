@@ -22,6 +22,8 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver;
 import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
+
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -47,7 +49,7 @@ public class MainWindow implements ChangeListener {
 	static final double tot = 0.048; // total buffer base = [A-]+[HA]
 	static final double stdSID = 0.04796; // strong ion differenz, tailored to make HA=0.024 for std. conditions
 	static final double CO2concToPressure = 33333.3; // factor to convert mol/L to mmHg
-//	private static final String APPNAME = "SŠure Base Demo";
+//	private static final String APPNAME = "Sï¿½ure Base Demo";
 	private JPanel panelControls;
 
 
@@ -315,12 +317,13 @@ public class MainWindow implements ChangeListener {
 		JMenuItem mntmberSureBase = new JMenuItem("\u00DCber S\u00E4ure Base Demo...");
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frmSBDemo,"Säure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frmSBDemo,"Sï¿½ure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mnDatei.add(mntmberSureBase);
 
 		this.graphSurface=new GraphSurface(this, 10,10,10,10,10);
+		graphSurface.setBackground(Color.white);
 		//frmSBDemo.getContentPane().add(graphSurface);
 		//		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
