@@ -209,15 +209,6 @@ public class MainWindow implements ChangeListener {
 	private void initialize() {
 		final int height=510;
 		frmSBDemo = new JFrame();
-		/*frame.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				JFrame f=(JFrame)arg0.getSource();
-				Dimension d=f.getSize();
-				Insets insets = f.getInsets();
-				graphSurface.setSize(374, d.height-5-insets.top-insets.bottom);
-			}
-		});*/
 		frmSBDemo.setTitle("S\u00E4ure Base Demo");
 		frmSBDemo.setBounds(100, 100, 708, height);
 		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
@@ -239,6 +230,7 @@ public class MainWindow implements ChangeListener {
 		panelControls.setPreferredSize(null);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
+		txtLabelSliderSBE.setToolTipText("<html>Positive Werte Simulieren eine metabolische Alkalose<br>bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw. die<br>Kompensation einer respiratorischen Alkalose.</html>");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
@@ -281,6 +273,7 @@ public class MainWindow implements ChangeListener {
 				sliderSBE.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
+				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>simulieren eine respiratorische Azidose oder Kompensation<br>einer metabol. Alkalose,<br>kleinere Werte (Hyperventilation) eine Alkalose oder die Kompensation einer<br>metabol. Azidose.</html>");
 				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
 				sliderLabel2.setBounds(48, 116, 269, 32);
 				sliderLabel2.setEditable(false);
@@ -317,21 +310,21 @@ public class MainWindow implements ChangeListener {
 		JMenuItem mntmberSureBase = new JMenuItem("\u00DCber S\u00E4ure Base Demo...");
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frmSBDemo,"S�ure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frmSBDemo,"Säure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mnDatei.add(mntmberSureBase);
 
 		this.graphSurface=new GraphSurface(this, 10,10,10,10,10);
 		graphSurface.setBackground(Color.white);
-		//frmSBDemo.getContentPane().add(graphSurface);
-		//		JPanel panel = new JPanel();
+		
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		frmSBDemo.getContentPane().add(graphSurface, gbc_panel);
-		
+		JPanel panel = new JPanel();
+//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel);
+		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
 		
 	}
 }
