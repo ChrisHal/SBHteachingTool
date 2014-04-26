@@ -324,7 +324,7 @@ public class MainWindow implements ChangeListener {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		JPanel panel = new JPanel();
+//		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
 		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
 //		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
 		
