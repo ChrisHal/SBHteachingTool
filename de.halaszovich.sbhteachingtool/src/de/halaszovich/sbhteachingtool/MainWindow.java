@@ -232,7 +232,9 @@ public class MainWindow implements ChangeListener {
 		panelControls.setPreferredSize(null);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
-		txtLabelSliderSBE.setToolTipText("<html>Positive Werte Simulieren eine metabolische Alkalose<br>bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw. die<br>Kompensation einer respiratorischen Alkalose.</html>");
+		txtLabelSliderSBE.setToolTipText("<html>Positive Werte Simulieren eine metabolische Alkalose<br>"
+				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw. die<br>"
+				+"Kompensation einer respiratorischen Alkalose.</html>");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
@@ -275,7 +277,10 @@ public class MainWindow implements ChangeListener {
 				sliderSBE.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
-				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>simulieren eine respiratorische Azidose oder Kompensation<br>einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>die Kompensation einer metabol. Azidose.</html>");
+				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
+						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
+						+"die Kompensation einer metabol. Azidose.</html>");
 				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
 				sliderLabel2.setBounds(48, 116, 269, 32);
 				sliderLabel2.setEditable(false);
