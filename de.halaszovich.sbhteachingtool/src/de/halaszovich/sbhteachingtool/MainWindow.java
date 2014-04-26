@@ -322,7 +322,7 @@ public class MainWindow implements ChangeListener {
 		});
 		mnDatei.add(mntmberSureBase);
 
-		this.graphSurface=new GraphSurface(this, 10,10,10,10,10);
+		this.graphSurface=new GraphSurface(this, 10,5,10,5,10);
 		graphSurface.setBackground(Color.white);
 		
 		GridBagConstraints gbc_panel = new GridBagConstraints();
