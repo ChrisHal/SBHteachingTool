@@ -97,6 +97,7 @@ public class GraphSurface extends JPanel {
 		        BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
 		g2d.setFont(LabelFont);
 		FontMetrics fm=g2d.getFontMetrics();
+		int spacing=fm.stringWidth("n");
 		g2d.setColor(Color.black);
 
 		Dimension size = getSize();
@@ -104,20 +105,38 @@ public class GraphSurface extends JPanel {
 
 		int w = size.width - insets.left - insets.right;
 		int h = size.height - insets.top - insets.bottom;
-		int verAxisLen=(h-AxisOffsetTop-AxisOffsetBottom-2*LeftAxisGap)/3;
+		int verAxisLen=(h-AxisOffsetTop-AxisOffsetBottom-2*LeftAxisGap-2*fm.getHeight())/3;
 		
 		// 1st: top coordinate system, pCO2
 		int 	pxLeft=AxisOffsetLeft,
 				pxRight=w-AxisOffsetRight,
-				pxTop=AxisOffsetTop,
-				pxBottom=AxisOffsetTop+verAxisLen; // corners of system in pixels
+				pxTop=AxisOffsetTop+fm.getHeight(),
+				pxBottom=pxTop+verAxisLen; // corners of system in pixels
+		String leftlabel, rightlabel,toplabel,bottomlabel;
+		int labelx,labely;
 		
 		g2d.drawLine(pxLeft, pxTop, pxRight, pxTop); // horizontal line
-		g2d.drawString("pH", (pxLeft+pxRight)/2, pxTop+fm.getAscent());
+		
 		g2d.drawLine(pxLeft, pxTop, pxLeft, pxBottom);
-		g2d.drawString("pCO2", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
+		g2d.drawString("pCO2", pxLeft+spacing, (pxBottom+pxTop)/2);
 		CoordinateScaler xscale=new CoordinateScaler(pxLeft,pxRight,MIN_PH,MAX_PH);
 		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2);
+		
+		// add values to axis
+		leftlabel=String.format("%.1f",MIN_PH);
+		rightlabel=String.format("%.1f", MAX_PH);
+		labelx=pxLeft;labely=AxisOffsetTop+fm.getAscent();
+		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
+		g2d.drawString(leftlabel, labelx, labely);
+		labelx=pxRight-fm.stringWidth(rightlabel);
+		g2d.drawString(rightlabel, labelx, labely);
+		toplabel=String.format("%.0fmmHg", MAX_pCO2);
+		bottomlabel=String.format("%.0fmmHg", MIN_pCO2);
+		labelx=pxLeft+spacing/2;
+		labely=pxTop+fm.getAscent();
+		g2d.drawString(toplabel, labelx, labely);
+		labely=pxBottom-fm.getDescent();
+		g2d.drawString(bottomlabel, labelx, labely);
 		
 		int stdX=xscale.scale(STD_PH);
 		int stdY=yscale.scale(STD_pCO2);
@@ -135,7 +154,7 @@ public class GraphSurface extends JPanel {
 		// 2nd: middle coordinate system, HCO3 aktuell
 		// TODO: code
 		g2d.setColor(Color.red);
-		pxTop=AxisOffsetTop+LeftAxisGap+verAxisLen;
+		pxTop=pxBottom+LeftAxisGap;
 		pxBottom=pxTop+verAxisLen;
 		g2d.drawLine(pxLeft,pxTop,pxLeft,pxBottom);
 	
@@ -150,6 +169,12 @@ public class GraphSurface extends JPanel {
 		g2d.drawString(label,pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
 //		g2d.setTransform(oldat);
 		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3);
+		toplabel=String.format("%2.0fmM", 1000*MAX_HCO3);
+		bottomlabel=String.format("%2.0fmM", 1000*MIN_HCO3);
+		labely=pxTop+fm.getAscent();
+		g2d.drawString(toplabel, labelx, labely);
+		labely=pxBottom-fm.getDescent();
+		g2d.drawString(bottomlabel, labelx, labely);
 		stdY=yscale.scale(STD_HCO3);
 		g2d.setStroke(brokenline);
 		g2d.drawLine(stdX,pxTop,stdX,pxBottom);
@@ -162,12 +187,25 @@ public class GraphSurface extends JPanel {
 		
 		// 3nd: bottom coordinate system, BE
 		g2d.setColor(Color.blue);
-		pxTop=h-AxisOffsetBottom-verAxisLen;
-		pxBottom=h-AxisOffsetBottom; // corners of system in pixels
+		pxTop=pxBottom+LeftAxisGap;
+		pxBottom=pxTop+verAxisLen;
 		g2d.setStroke(brokenline);
+		leftlabel=String.format("%.1f",MIN_PH);
+		rightlabel=String.format("%.1f", MAX_PH);
+		labelx=pxLeft;labely=pxBottom+fm.getAscent();
+		g2d.drawString(leftlabel, labelx, labely);
+		labelx=pxRight-fm.stringWidth(rightlabel);
+		g2d.drawString(rightlabel, labelx, labely);
 		g2d.drawLine(stdX, pxTop, stdX, pxBottom);
 		g2d.drawString("BE", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
 		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_BE,MAX_BE);
+		toplabel=String.format("%2.0fmM", 1000*MAX_BE);
+		bottomlabel=String.format("%2.0fmM", 1000*MIN_BE);
+		labelx=pxLeft+spacing/2;
+		labely=pxTop+fm.getAscent();
+		g2d.drawString(toplabel, labelx, labely);
+		labely=pxBottom-fm.getDescent();
+		g2d.drawString(bottomlabel, labelx, labely);
 		stdY=yscale.scale(STD_BE);
 		g2d.drawLine(pxLeft,stdY,pxRight,stdY);
 		g2d.setStroke(oldstroke);
@@ -176,7 +214,7 @@ public class GraphSurface extends JPanel {
 		
 		g2d.drawLine(pxLeft, pxBottom, pxLeft, pxTop);
 		g2d.drawLine(pxLeft, pxBottom, pxRight, pxBottom);
-		g2d.drawString("pH", (pxLeft+pxRight)/2, pxBottom-fm.getDescent());
+		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.be,xscale,yscale);
 		
