@@ -35,7 +35,7 @@ import javax.swing.border.TitledBorder;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
-		APP_VERSION="0.9+",
+		APP_VERSION="rc1.0",
 		COPYRIGHT="(C) Christian R. Halaszovich",
 		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
 				+"Positive Werte simulieren eine metabolische Alkalose<br>"
