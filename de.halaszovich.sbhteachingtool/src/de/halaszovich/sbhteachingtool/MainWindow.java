@@ -31,6 +31,7 @@ import java.awt.Insets;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
+import java.util.ResourceBundle;
 
 public class MainWindow implements ChangeListener {
 	public static final String 
@@ -226,7 +227,7 @@ public class MainWindow implements ChangeListener {
 	private void initialize() {
 		final int height=510;
 		frmSBDemo = new JFrame();
-		frmSBDemo.setTitle("S\u00E4ure Base Demo");
+		frmSBDemo.setTitle(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.frmSBDemo.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		frmSBDemo.setBounds(100, 100, 708, height);
 		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -271,13 +272,12 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setContentType("text/html");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
-		txtLabelSliderSBE.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">nicht-respiratorische Komponente:<br>"
-				+"\u00DCberschuss starker Basen (mmol/L)</FONT></html>");
+		txtLabelSliderSBE.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderSBE.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		txtLabelSliderSBE.setBounds(38, 10, 205, 32);
 		panelControls.add(txtLabelSliderSBE);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "S\u00E4ure Base Status",
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.panel_1.borderTitle"), //$NON-NLS-2$ //$NON-NLS-3$
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(57, 251, 197, 137);
 		panelControls.add(panel_1);
@@ -322,7 +322,7 @@ public class MainWindow implements ChangeListener {
 		sliderSBE.setPaintTicks(true);
 		sliderSBE.setPaintLabels(true);
 
-		JButton btnReset = new JButton("reset");
+		JButton btnReset = new JButton(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.btnReset.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnReset.setBounds(73, 397, 164, 29);
 		panelControls.add(btnReset);
 
@@ -349,9 +349,8 @@ public class MainWindow implements ChangeListener {
 //						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 //						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
 //						+"die Kompensation einer metabol. Azidose.</html>");
-				sliderLabel2.setContentType("text/html");
-				sliderLabel2.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">"
-						+"respiratorische Komponente:<br>[CO<sub>2</sub>] (0.1 mmol/L)</FONT></html>");
+				sliderLabel2.setContentType(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.sliderLabel2.contentType_1")); //$NON-NLS-1$ //$NON-NLS-2$
+				sliderLabel2.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderCO2")); //$NON-NLS-1$ //$NON-NLS-2$
 				sliderLabel2.setBounds(38, 120, 205, 43);
 				sliderLabel2.setEditable(false);
 				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
@@ -367,10 +366,10 @@ public class MainWindow implements ChangeListener {
 		JMenuBar menuBar = new JMenuBar();
 		frmSBDemo.setJMenuBar(menuBar);
 		
-		JMenu mnDatei = new JMenu("Datei");
+		JMenu mnDatei = new JMenu(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mnDatei.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnDatei);
 		
-		JMenuItem mntmberSureBase = new JMenuItem("\u00DCber S\u00E4ure Base Demo...");
+		JMenuItem mntmberSureBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmSBDemo,
@@ -388,9 +387,9 @@ public class MainWindow implements ChangeListener {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-//		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
-		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
-//		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
+		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
+		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
+//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
 		
 	}
 }
