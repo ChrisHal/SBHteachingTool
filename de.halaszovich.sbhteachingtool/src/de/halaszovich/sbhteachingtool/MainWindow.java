@@ -28,6 +28,7 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JSeparator;
 
 
 public class MainWindow implements ChangeListener {
@@ -231,6 +232,18 @@ public class MainWindow implements ChangeListener {
 		panelControls.setLayout(null);
 		panelControls.setPreferredSize(null);
 		
+		JTextPane sliderLabel2 = new JTextPane();
+		sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+				+"simulieren eine respiratorische Azidose oder Kompensation<br>"
+				+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
+				+"die Kompensation einer metabol. Azidose.</html>");
+		sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
+		sliderLabel2.setBounds(38, 120, 205, 43);
+		sliderLabel2.setEditable(false);
+		sliderLabel2.setBackground(UIManager.getColor("Label.background"));
+		panelControls.add(sliderLabel2);
+		sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		JTextPane txtLabelSliderSBE = new JTextPane();
 		txtLabelSliderSBE.setToolTipText("<html>Positive Werte simulieren eine metabolische Alkalose<br>"
 				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
@@ -238,7 +251,7 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
-		txtLabelSliderSBE.setBounds(48, 24, 269, 32);
+		txtLabelSliderSBE.setBounds(38, 24, 269, 32);
 		panelControls.add(txtLabelSliderSBE);
 		//		uncomment to get center aligned text
 		//		SimpleAttributeSet aSet = new SimpleAttributeSet();
@@ -247,27 +260,27 @@ public class MainWindow implements ChangeListener {
 		//        doc.setParagraphAttributes(0, 100, aSet, false);
 				
 				this.lblpH = new JLabel("pH: NaN");
-				lblpH.setBounds(95, 331, 180, 16);
+				lblpH.setBounds(95, 338, 180, 16);
 				panelControls.add(lblpH);
 				
 				this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
-				lblHCO3.setBounds(95, 273, 180, 16);
+				lblHCO3.setBounds(95, 280, 180, 16);
 				panelControls.add(lblHCO3);
 				
 				this.lblBE = new JLabel("BE x mmol/L");
-				lblBE.setBounds(95, 302, 180, 16);
+				lblBE.setBounds(95, 309, 180, 16);
 				panelControls.add(lblBE);
 				
 				this.lblpCO2 = new JLabel("pCO2");
-				lblpCO2.setBounds(95, 244, 180, 16);
+				lblpCO2.setBounds(95, 251, 180, 16);
 				panelControls.add(lblpCO2);
 				
 				this.lblCO2 = new JLabel("CO2: x mmol/L");
-				lblCO2.setBounds(95, 215, 180, 16);
+				lblCO2.setBounds(95, 222, 180, 16);
 				panelControls.add(lblCO2);
 				
 				sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
-				sliderSBE.setBounds(38, 56, 269, 52);
+				sliderSBE.setBounds(28, 56, 269, 52);
 				panelControls.add(sliderSBE);
 				sliderSBE.addChangeListener(this);
 				//Turn on labels at major tick marks.
@@ -276,20 +289,8 @@ public class MainWindow implements ChangeListener {
 				sliderSBE.setPaintTicks(true);
 				sliderSBE.setPaintLabels(true);
 				
-				JTextPane sliderLabel2 = new JTextPane();
-				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
-						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
-						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
-						+"die Kompensation einer metabol. Azidose.</html>");
-				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
-				sliderLabel2.setBounds(48, 116, 269, 32);
-				sliderLabel2.setEditable(false);
-				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
-				panelControls.add(sliderLabel2);
-				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
-				
 				this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-				sliderCO2.setBounds(38, 148, 269, 52);
+				sliderCO2.setBounds(28, 158, 269, 52);
 				panelControls.add(sliderCO2);
 				sliderCO2.addChangeListener(this);
 				//Turn on labels at major tick marks.
@@ -301,6 +302,14 @@ public class MainWindow implements ChangeListener {
 				JButton btnReset = new JButton("reset");
 				btnReset.setBounds(79, 374, 164, 29);
 				panelControls.add(btnReset);
+				
+				JSeparator separator = new JSeparator();
+				separator.setBounds(10, 108, 290, 2);
+				panelControls.add(separator);
+				
+				JSeparator separator_1 = new JSeparator();
+				separator_1.setBounds(10, 215, 290, 2);
+				panelControls.add(separator_1);
 				btnReset.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						resetValues();
