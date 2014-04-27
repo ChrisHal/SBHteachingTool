@@ -28,14 +28,23 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JSeparator;
 
+import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
 
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
 		APP_VERSION="0.8",
-		COPYRIGHT="(C) Christian R. Halaszovich";
+		COPYRIGHT="(C) Christian R. Halaszovich",
+		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
+				+"Positive Werte simulieren eine metabolische Alkalose<br>"
+				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
+				+"Kompensation einer respiratorischen Alkalose.</html>";
+	static final String INFO_SLIDERCO2 = "<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+			+"simulieren eine respiratorische Azidose oder Kompensation<br>"
+			+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
+			+"die Kompensation einer metabol. Azidose.</html>";
 	private JFrame frmSBDemo;
 	private JLabel lblpH, lblCO2, lblpCO2, lblBE, lblHCO3;
 	private JSlider sliderSBE, sliderCO2;
@@ -54,7 +63,8 @@ public class MainWindow implements ChangeListener {
 	static final double tot = 0.048; // total buffer base = [A-]+[HA]
 	static final double stdSID = 0.04796; // strong ion differenz, tailored to make HA=0.024 for std. conditions
 	static final double CO2concToPressure = 33333.3; // factor to convert mol/L to mmHg
-//	private static final String APPNAME = "Säure Base Demo";
+	
+	//private static final String APPNAME = "Säure Base Demo";
 	private JPanel panelControls;
 
 
@@ -208,7 +218,8 @@ public class MainWindow implements ChangeListener {
         this.graphSurface.grapData();
         this.updateValueDisplays();
         }
-	/**
+
+    /**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -236,22 +247,31 @@ public class MainWindow implements ChangeListener {
 		panelControls.setLayout(null);
 		panelControls.setPreferredSize(null);
 		
-		JTextPane sliderLabel2 = new JTextPane();
-		sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
-				+"simulieren eine respiratorische Azidose oder Kompensation<br>"
-				+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
-				+"die Kompensation einer metabol. Azidose.</html>");
-		sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
-		sliderLabel2.setBounds(38, 120, 205, 43);
-		sliderLabel2.setEditable(false);
-		sliderLabel2.setBackground(UIManager.getColor("Label.background"));
-		panelControls.add(sliderLabel2);
-		sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/Question.gif"));
+		JButton btnHelpSBE = new JButton("");
+		btnHelpSBE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERSBE, "Hilfe", JOptionPane.INFORMATION_MESSAGE, questionmark);
+			}
+		});	
+		btnHelpSBE.setIcon(questionmark);
+		btnHelpSBE.setBounds(267, 10, 30, 32);
+		panelControls.add(btnHelpSBE);
+		
+		JButton btnHelpCO2 = new JButton("");
+		btnHelpCO2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERCO2, "Hilfe", JOptionPane.INFORMATION_MESSAGE, questionmark);
+			}
+		});	
+		btnHelpCO2.setIcon(questionmark);
+		btnHelpCO2.setBounds(267, 121, 30, 32);
+		panelControls.add(btnHelpCO2);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
-		txtLabelSliderSBE.setToolTipText("<html>Positive Werte simulieren eine metabolische Alkalose<br>"
-				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
-				+"Kompensation einer respiratorischen Alkalose.</html>");
+//		txtLabelSliderSBE.setToolTipText("<html>Positive Werte simulieren eine metabolische Alkalose<br>"
+//				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
+//				+"Kompensation einer respiratorischen Alkalose.</html>");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
@@ -297,16 +317,6 @@ public class MainWindow implements ChangeListener {
 		sliderSBE.setPaintTicks(true);
 		sliderSBE.setPaintLabels(true);
 
-		this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-		sliderCO2.setBounds(28, 158, 269, 52);
-		panelControls.add(sliderCO2);
-		sliderCO2.addChangeListener(this);
-		//Turn on labels at major tick marks.
-		sliderCO2.setMajorTickSpacing(10);
-		sliderCO2.setMinorTickSpacing(1);
-		sliderCO2.setPaintTicks(true);
-		sliderCO2.setPaintLabels(true);
-
 		JButton btnReset = new JButton("reset");
 		btnReset.setBounds(79, 374, 164, 29);
 		panelControls.add(btnReset);
@@ -318,6 +328,28 @@ public class MainWindow implements ChangeListener {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 215, 290, 2);
 		panelControls.add(separator_1);
+		
+				this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
+				sliderCO2.setBounds(28, 158, 269, 52);
+				panelControls.add(sliderCO2);
+				sliderCO2.addChangeListener(this);
+				//Turn on labels at major tick marks.
+				sliderCO2.setMajorTickSpacing(10);
+				sliderCO2.setMinorTickSpacing(1);
+				sliderCO2.setPaintTicks(true);
+				sliderCO2.setPaintLabels(true);
+				
+				JTextPane sliderLabel2 = new JTextPane();
+//				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+//						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
+//						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
+//						+"die Kompensation einer metabol. Azidose.</html>");
+				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
+				sliderLabel2.setBounds(38, 120, 205, 43);
+				sliderLabel2.setEditable(false);
+				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
+				panelControls.add(sliderLabel2);
+				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				resetValues();
@@ -349,9 +381,9 @@ public class MainWindow implements ChangeListener {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-//		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
-		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
-//		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
+		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
+//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
+		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
 		
 	}
 }
