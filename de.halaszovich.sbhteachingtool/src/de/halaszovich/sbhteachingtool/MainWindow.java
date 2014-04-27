@@ -36,7 +36,7 @@ import javax.swing.border.TitledBorder;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
-		APP_VERSION="0.8",
+		APP_VERSION="0.8+",
 		COPYRIGHT="(C) Christian R. Halaszovich",
 		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
 				+"Positive Werte simulieren eine metabolische Alkalose<br>"
@@ -275,7 +275,7 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">nicht-respiratorische Komponente:<br>"
-				+"\u00DCberschuss starker Basen (mmol/L)</html>");
+				+"\u00DCberschuss starker Basen (mmol/L)</FONT></html>");
 		txtLabelSliderSBE.setBounds(38, 10, 269, 32);
 		panelControls.add(txtLabelSliderSBE);
 		
