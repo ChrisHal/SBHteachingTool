@@ -43,7 +43,7 @@ public class MainWindow implements ChangeListener {
 				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
 				+"Kompensation einer respiratorischen Alkalose.</html>";
 	static final String INFO_SLIDERCO2 = "<html>CO<sub>2</sub> Konzentration in mmol/L:<br>"
-			+"Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+			+"Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO<sub>2</sub>)<br>"
 			+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 			+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
 			+"die Kompensation einer metabol. Azidose.</html>";
