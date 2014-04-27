@@ -32,7 +32,10 @@ import javax.swing.JSeparator;
 
 
 public class MainWindow implements ChangeListener {
-
+	public static final String 
+		APP_NAME="Säure Base Demo",
+		APP_VERSION="0.8",
+		COPYRIGHT="(C) Christian R. Halaszovich";
 	private JFrame frmSBDemo;
 	private JLabel lblpH, lblCO2, lblpCO2, lblBE, lblHCO3;
 	private JSlider sliderSBE, sliderCO2;
@@ -209,6 +212,7 @@ public class MainWindow implements ChangeListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// TODO: Use context help instead of ToolTips?
 		ToolTipManager.sharedInstance().setDismissDelay(10000); // display tooltips for 10 sec
 		final int height=510;
 		frmSBDemo = new JFrame();
@@ -251,7 +255,7 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
-		txtLabelSliderSBE.setBounds(38, 24, 269, 32);
+		txtLabelSliderSBE.setBounds(38, 10, 269, 32);
 		panelControls.add(txtLabelSliderSBE);
 		//		uncomment to get center aligned text
 		//		SimpleAttributeSet aSet = new SimpleAttributeSet();
@@ -259,61 +263,65 @@ public class MainWindow implements ChangeListener {
 		//        StyledDocument doc = txtLabelSliderSBE.getStyledDocument();
 		//        doc.setParagraphAttributes(0, 100, aSet, false);
 				
-				this.lblpH = new JLabel("pH: NaN");
-				lblpH.setBounds(95, 338, 180, 16);
-				panelControls.add(lblpH);
-				
-				this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
-				lblHCO3.setBounds(95, 280, 180, 16);
-				panelControls.add(lblHCO3);
-				
-				this.lblBE = new JLabel("BE x mmol/L");
-				lblBE.setBounds(95, 309, 180, 16);
-				panelControls.add(lblBE);
-				
-				this.lblpCO2 = new JLabel("pCO2");
-				lblpCO2.setBounds(95, 251, 180, 16);
-				panelControls.add(lblpCO2);
-				
-				this.lblCO2 = new JLabel("CO2: x mmol/L");
-				lblCO2.setBounds(95, 222, 180, 16);
-				panelControls.add(lblCO2);
-				
-				sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
-				sliderSBE.setBounds(28, 56, 269, 52);
-				panelControls.add(sliderSBE);
-				sliderSBE.addChangeListener(this);
-				//Turn on labels at major tick marks.
-				sliderSBE.setMajorTickSpacing(5);
-				sliderSBE.setMinorTickSpacing(1);
-				sliderSBE.setPaintTicks(true);
-				sliderSBE.setPaintLabels(true);
-				
-				this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-				sliderCO2.setBounds(28, 158, 269, 52);
-				panelControls.add(sliderCO2);
-				sliderCO2.addChangeListener(this);
-				//Turn on labels at major tick marks.
-				sliderCO2.setMajorTickSpacing(10);
-				sliderCO2.setMinorTickSpacing(1);
-				sliderCO2.setPaintTicks(true);
-				sliderCO2.setPaintLabels(true);
-				
-				JButton btnReset = new JButton("reset");
-				btnReset.setBounds(79, 374, 164, 29);
-				panelControls.add(btnReset);
-				
-				JSeparator separator = new JSeparator();
-				separator.setBounds(10, 108, 290, 2);
-				panelControls.add(separator);
-				
-				JSeparator separator_1 = new JSeparator();
-				separator_1.setBounds(10, 215, 290, 2);
-				panelControls.add(separator_1);
-				btnReset.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						resetValues();
-					}
+		
+		// NOTE: the label text will be dynamically set by updateValueDisplays()
+		// so it does not matter what we put in here. We should put some text to help
+		// with GUI building.
+		this.lblpH = new JLabel("pH: NaN");
+		lblpH.setBounds(95, 338, 180, 16);
+		panelControls.add(lblpH);
+
+		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
+		lblHCO3.setBounds(95, 280, 180, 16);
+		panelControls.add(lblHCO3);
+
+		this.lblBE = new JLabel("BE x mmol/L");
+		lblBE.setBounds(95, 309, 180, 16);
+		panelControls.add(lblBE);
+
+		this.lblpCO2 = new JLabel("pCO2");
+		lblpCO2.setBounds(95, 251, 180, 16);
+		panelControls.add(lblpCO2);
+
+		this.lblCO2 = new JLabel("CO2: x mmol/L");
+		lblCO2.setBounds(95, 222, 180, 16);
+		panelControls.add(lblCO2);
+
+		sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
+		sliderSBE.setBounds(28, 45, 269, 52);
+		panelControls.add(sliderSBE);
+		sliderSBE.addChangeListener(this);
+		//Turn on labels at major tick marks.
+		sliderSBE.setMajorTickSpacing(5);
+		sliderSBE.setMinorTickSpacing(1);
+		sliderSBE.setPaintTicks(true);
+		sliderSBE.setPaintLabels(true);
+
+		this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
+		sliderCO2.setBounds(28, 158, 269, 52);
+		panelControls.add(sliderCO2);
+		sliderCO2.addChangeListener(this);
+		//Turn on labels at major tick marks.
+		sliderCO2.setMajorTickSpacing(10);
+		sliderCO2.setMinorTickSpacing(1);
+		sliderCO2.setPaintTicks(true);
+		sliderCO2.setPaintLabels(true);
+
+		JButton btnReset = new JButton("reset");
+		btnReset.setBounds(79, 374, 164, 29);
+		panelControls.add(btnReset);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 108, 290, 2);
+		panelControls.add(separator);
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 215, 290, 2);
+		panelControls.add(separator_1);
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				resetValues();
+			}
 				});
 		
 
@@ -326,7 +334,10 @@ public class MainWindow implements ChangeListener {
 		JMenuItem mntmberSureBase = new JMenuItem("\u00DCber S\u00E4ure Base Demo...");
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frmSBDemo,"S\u00E4ure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frmSBDemo,
+						String.format("%s (Version %s)\n%s", MainWindow.APP_NAME, 
+								MainWindow.APP_VERSION,MainWindow.COPYRIGHT),
+						"About",JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mnDatei.add(mntmberSureBase);

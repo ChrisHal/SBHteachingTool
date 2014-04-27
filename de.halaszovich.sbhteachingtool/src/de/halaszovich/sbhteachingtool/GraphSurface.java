@@ -152,7 +152,6 @@ public class GraphSurface extends JPanel {
 		
 		
 		// 2nd: middle coordinate system, HCO3 aktuell
-		// TODO: code
 		g2d.setColor(Color.red);
 		pxTop=pxBottom+LeftAxisGap;
 		pxBottom=pxTop+verAxisLen;
@@ -218,7 +217,7 @@ public class GraphSurface extends JPanel {
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.be,xscale,yscale);
 		
-		// TODO: add lables / tics
+		// TODO: add tics, if we think we need them
 	}
 
 	@Override
