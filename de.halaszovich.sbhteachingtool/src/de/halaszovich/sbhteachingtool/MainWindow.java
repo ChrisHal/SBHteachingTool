@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
-		APP_VERSION="rc1.0",
+		APP_VERSION="1.0+exp",
 		COPYRIGHT="(C) Christian R. Halaszovich",
 		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE");
 //		"<html>Überschuss starker Basen:<br>"
