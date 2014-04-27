@@ -31,6 +31,7 @@ import java.awt.Insets;
 
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
+import javax.swing.border.TitledBorder;
 
 public class MainWindow implements ChangeListener {
 	public static final String 
@@ -41,7 +42,8 @@ public class MainWindow implements ChangeListener {
 				+"Positive Werte simulieren eine metabolische Alkalose<br>"
 				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
 				+"Kompensation einer respiratorischen Alkalose.</html>";
-	static final String INFO_SLIDERCO2 = "<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
+	static final String INFO_SLIDERCO2 = "<html>CO<sub>2</sub> Konzentration in mmol/L<br>"
+			+"Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
 			+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 			+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
 			+"die Kompensation einer metabol. Azidose.</html>";
@@ -269,14 +271,20 @@ public class MainWindow implements ChangeListener {
 		panelControls.add(btnHelpCO2);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
-//		txtLabelSliderSBE.setToolTipText("<html>Positive Werte simulieren eine metabolische Alkalose<br>"
-//				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
-//				+"Kompensation einer respiratorischen Alkalose.</html>");
+		txtLabelSliderSBE.setContentType("text/html");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
-		txtLabelSliderSBE.setText("nicht-respiratorische Komponente:\n\u00DCberschuss starker Basen (mmol/L)");
+		txtLabelSliderSBE.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">nicht-respiratorische Komponente:<br>"
+				+"\u00DCberschuss starker Basen (mmol/L)</html>");
 		txtLabelSliderSBE.setBounds(38, 10, 269, 32);
 		panelControls.add(txtLabelSliderSBE);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "S\u00E4ure Base Status",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(65, 251, 180, 137);
+		panelControls.add(panel_1);
+		panel_1.setLayout(null);
 		//		uncomment to get center aligned text
 		//		SimpleAttributeSet aSet = new SimpleAttributeSet();
 		//        StyleConstants.setAlignment(aSet, StyleConstants.ALIGN_CENTER);
@@ -288,23 +296,23 @@ public class MainWindow implements ChangeListener {
 		// so it does not matter what we put in here. We should put some text to help
 		// with GUI building.
 		this.lblpH = new JLabel("pH: NaN");
-		lblpH.setBounds(95, 338, 180, 16);
-		panelControls.add(lblpH);
+		lblpH.setBounds(10, 110, 137, 16);
+		panel_1.add(lblpH);
 
 		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
-		lblHCO3.setBounds(95, 280, 180, 16);
-		panelControls.add(lblHCO3);
+		lblHCO3.setBounds(10, 50, 156, 16);
+		panel_1.add(lblHCO3);
 
 		this.lblBE = new JLabel("BE x mmol/L");
-		lblBE.setBounds(95, 309, 180, 16);
-		panelControls.add(lblBE);
+		lblBE.setBounds(10, 80, 137, 16);
+		panel_1.add(lblBE);
 
 		this.lblpCO2 = new JLabel("pCO2");
-		lblpCO2.setBounds(95, 251, 180, 16);
-		panelControls.add(lblpCO2);
+		lblpCO2.setBounds(10, 20, 137, 16);
+		panel_1.add(lblpCO2);
 
 		this.lblCO2 = new JLabel("CO2: x mmol/L");
-		lblCO2.setBounds(95, 222, 180, 16);
+		lblCO2.setBounds(95, 210, 180, 16);
 		panelControls.add(lblCO2);
 
 		sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
@@ -318,7 +326,7 @@ public class MainWindow implements ChangeListener {
 		sliderSBE.setPaintLabels(true);
 
 		JButton btnReset = new JButton("reset");
-		btnReset.setBounds(79, 374, 164, 29);
+		btnReset.setBounds(73, 397, 164, 29);
 		panelControls.add(btnReset);
 
 		JSeparator separator = new JSeparator();
@@ -326,25 +334,27 @@ public class MainWindow implements ChangeListener {
 		panelControls.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 215, 290, 2);
+		separator_1.setBounds(10, 238, 290, 2);
 		panelControls.add(separator_1);
 		
-				this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-				sliderCO2.setBounds(28, 158, 269, 52);
-				panelControls.add(sliderCO2);
-				sliderCO2.addChangeListener(this);
-				//Turn on labels at major tick marks.
-				sliderCO2.setMajorTickSpacing(10);
-				sliderCO2.setMinorTickSpacing(1);
-				sliderCO2.setPaintTicks(true);
-				sliderCO2.setPaintLabels(true);
+		this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
+		sliderCO2.setBounds(28, 158, 269, 52);
+		panelControls.add(sliderCO2);
+		sliderCO2.addChangeListener(this);
+		//Turn on labels at major tick marks.
+		sliderCO2.setMajorTickSpacing(10);
+		sliderCO2.setMinorTickSpacing(1);
+		sliderCO2.setPaintTicks(true);
+		sliderCO2.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
 //				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
 //						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 //						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
 //						+"die Kompensation einer metabol. Azidose.</html>");
-				sliderLabel2.setText("respiratorische Komponente:\n[CO2] (0.1 mmol/L)");
+				sliderLabel2.setContentType("text/html");
+				sliderLabel2.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">"
+						+"respiratorische Komponente:<br>[CO<sub>2</sub>] (0.1 mmol/L)</FONT></html>");
 				sliderLabel2.setBounds(38, 120, 205, 43);
 				sliderLabel2.setEditable(false);
 				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
@@ -381,9 +391,9 @@ public class MainWindow implements ChangeListener {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
-//		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
-		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
+//		JPanel panel = new JPanel(); // comment out if in production, to avoid spurious warning
+		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
+//		frmSBDemo.getContentPane().add(panel, gbc_panel); // use this line for GUI designer
 		
 	}
 }
