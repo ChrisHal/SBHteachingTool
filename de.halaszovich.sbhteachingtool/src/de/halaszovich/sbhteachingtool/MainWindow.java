@@ -317,7 +317,7 @@ public class MainWindow implements ChangeListener {
 		JMenuItem mntmberSureBase = new JMenuItem("\u00DCber S\u00E4ure Base Demo...");
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frmSBDemo,"Säure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frmSBDemo,"S\u00E4ure Base Demo\n(c) 2014 Christian R. Halaszovich","About",JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mnDatei.add(mntmberSureBase);
