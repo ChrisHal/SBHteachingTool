@@ -161,7 +161,7 @@ public class MainWindow implements ChangeListener {
 	
 	private void resetValues(){
 		this.sliderSBE.setValue(0);
-		this.sliderCO2.setValue(12);//(int)(1e4*STD_CO2));
+		this.sliderCO2.setValue(12);//matches std. [CO2] of 1.2 mmol/l
 		updateValues();
 		this.graphSurface.resetGraph();
 		updateValueDisplays();
@@ -232,8 +232,8 @@ public class MainWindow implements ChangeListener {
 		panelControls.setPreferredSize(null);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
-		txtLabelSliderSBE.setToolTipText("<html>Positive Werte Simulieren eine metabolische Alkalose<br>"
-				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw. die<br>"
+		txtLabelSliderSBE.setToolTipText("<html>Positive Werte simulieren eine metabolische Alkalose<br>"
+				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
 				+"Kompensation einer respiratorischen Alkalose.</html>");
 		txtLabelSliderSBE.setEditable(false);
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
