@@ -38,10 +38,11 @@ public class MainWindow implements ChangeListener {
 		APP_NAME="Säure Base Demo",
 		APP_VERSION="rc1.0",
 		COPYRIGHT="(C) Christian R. Halaszovich",
-		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
-				+"Positive Werte simulieren eine metabolische Alkalose<br>"
-				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
-				+"Kompensation einer respiratorischen Alkalose.</html>";
+		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE");
+//		"<html>Überschuss starker Basen:<br>"
+//				+"Positive Werte simulieren eine metabolische Alkalose<br>"
+//				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
+//				+"Kompensation einer respiratorischen Alkalose.</html>";
 	static final String INFO_SLIDERCO2 = "<html>CO<sub>2</sub> Konzentration in mmol/L:<br>"
 			+"Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO<sub>2</sub>)<br>"
 			+"simulieren eine respiratorische Azidose oder Kompensation<br>"
