@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
-import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,7 +35,7 @@ import javax.swing.border.TitledBorder;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
-		APP_VERSION="0.9",
+		APP_VERSION="0.9+",
 		COPYRIGHT="(C) Christian R. Halaszovich",
 		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
 				+"Positive Werte simulieren eine metabolische Alkalose<br>"
@@ -225,8 +224,6 @@ public class MainWindow implements ChangeListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		// TODO: Use context help instead of ToolTips?
-		ToolTipManager.sharedInstance().setDismissDelay(10000); // display tooltips for 10 sec
 		final int height=510;
 		frmSBDemo = new JFrame();
 		frmSBDemo.setTitle("S\u00E4ure Base Demo");
@@ -276,13 +273,13 @@ public class MainWindow implements ChangeListener {
 		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
 		txtLabelSliderSBE.setText("<html><FONT SIZE=\"3\" FACE=\"arial\">nicht-respiratorische Komponente:<br>"
 				+"\u00DCberschuss starker Basen (mmol/L)</FONT></html>");
-		txtLabelSliderSBE.setBounds(38, 10, 269, 32);
+		txtLabelSliderSBE.setBounds(38, 10, 205, 32);
 		panelControls.add(txtLabelSliderSBE);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "S\u00E4ure Base Status",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(65, 251, 180, 137);
+		panel_1.setBounds(57, 251, 197, 137);
 		panelControls.add(panel_1);
 		panel_1.setLayout(null);
 		//		uncomment to get center aligned text
@@ -296,19 +293,19 @@ public class MainWindow implements ChangeListener {
 		// so it does not matter what we put in here. We should put some text to help
 		// with GUI building.
 		this.lblpH = new JLabel("pH: NaN");
-		lblpH.setBounds(10, 110, 137, 16);
+		lblpH.setBounds(10, 110, 178, 16);
 		panel_1.add(lblpH);
 
 		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
-		lblHCO3.setBounds(10, 50, 156, 16);
+		lblHCO3.setBounds(10, 50, 178, 16);
 		panel_1.add(lblHCO3);
 
 		this.lblBE = new JLabel("BE x mmol/L");
-		lblBE.setBounds(10, 80, 137, 16);
+		lblBE.setBounds(10, 80, 178, 16);
 		panel_1.add(lblBE);
 
 		this.lblpCO2 = new JLabel("pCO2");
-		lblpCO2.setBounds(10, 20, 137, 16);
+		lblpCO2.setBounds(10, 20, 178, 16);
 		panel_1.add(lblpCO2);
 
 		this.lblCO2 = new JLabel("CO2: x mmol/L");
