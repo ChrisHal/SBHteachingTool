@@ -36,13 +36,13 @@ import javax.swing.border.TitledBorder;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME="Säure Base Demo",
-		APP_VERSION="0.8+",
+		APP_VERSION="0.9",
 		COPYRIGHT="(C) Christian R. Halaszovich",
 		INFO_SLIDERSBE="<html>Überschuss starker Basen:<br>"
 				+"Positive Werte simulieren eine metabolische Alkalose<br>"
 				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
 				+"Kompensation einer respiratorischen Alkalose.</html>";
-	static final String INFO_SLIDERCO2 = "<html>CO<sub>2</sub> Konzentration in mmol/L<br>"
+	static final String INFO_SLIDERCO2 = "<html>CO<sub>2</sub> Konzentration in mmol/L:<br>"
 			+"Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
 			+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 			+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
