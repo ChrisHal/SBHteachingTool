@@ -31,19 +31,16 @@ import java.awt.Insets;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
+
 import java.util.ResourceBundle;
 
 public class MainWindow implements ChangeListener {
 	public static final String 
-		APP_NAME="Säure Base Demo",
-		APP_VERSION="1.0+exp",
-		COPYRIGHT="(C) Christian R. Halaszovich",
-		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE");
-//		"<html>Überschuss starker Basen:<br>"
-//				+"Positive Werte simulieren eine metabolische Alkalose<br>"
-//				+"bzw. die Kompensation einer respiratorischen Azidose,<br>negative eine metabolische Azidose bzw.<br>die "
-//				+"Kompensation einer respiratorischen Alkalose.</html>";
-	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");;
+		APP_NAME=Messages.getString("MainWindow.AppNAme"), //$NON-NLS-1$ // used eclipse's mechanism for this one
+		APP_VERSION="1.0+exp", //$NON-NLS-1$
+		COPYRIGHT="(C) Christian R. Halaszovich", //$NON-NLS-1$
+		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE"); //$NON-NLS-1$ //$NON-NLS-2$
+	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");; //$NON-NLS-1$ //$NON-NLS-2$
 	private JFrame frmSBDemo;
 	private JLabel lblpH, lblCO2, lblpCO2, lblBE, lblHCO3;
 	private JSlider sliderSBE, sliderCO2;
@@ -164,11 +161,11 @@ public class MainWindow implements ChangeListener {
 	}
 	
 	private void updateValueDisplays() {
-		this.lblpH.setText(String.format("pH = %.2f",(-Math.log10(this.Hp))));
-		this.lblCO2.setText(String.format("[CO2] = %.1f mmol/L",this.CO2*1000.));
-		this.lblpCO2.setText(String.format("pCO2 = %.0f mmHg",this.pCO2));
-		this.lblHCO3.setText(String.format("[HCO3-]akt = %.1f mmol/L",this.HCO3*1000.));
-		this.lblBE.setText(String.format("BE = %.1f mmol/L",1000.*(Am+HCO3-0.048)));
+		this.lblpH.setText(String.format("pH = %.2f",(-Math.log10(this.Hp)))); //$NON-NLS-1$
+		this.lblCO2.setText(String.format("[CO2] = %.1f mmol/L",this.CO2*1000.)); //$NON-NLS-1$
+		this.lblpCO2.setText(String.format("pCO2 = %.0f mmHg",this.pCO2)); //$NON-NLS-1$
+		this.lblHCO3.setText(String.format(Messages.getString("MainWindow.LabelHCO3akt"),this.HCO3*1000.)); //$NON-NLS-1$
+		this.lblBE.setText(String.format("BE = %.1f mmol/L",1000.*(Am+HCO3-0.048))); //$NON-NLS-1$
 		this.graphSurface.repaint();
 	}
 	
@@ -244,21 +241,21 @@ public class MainWindow implements ChangeListener {
 		panelControls.setLayout(null);
 		panelControls.setPreferredSize(null);
 		
-		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/Question.gif"));
-		JButton btnHelpSBE = new JButton("");
+		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/Question.gif")); //$NON-NLS-1$
+		JButton btnHelpSBE = new JButton(""); //$NON-NLS-1$
 		btnHelpSBE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERSBE, "Hilfe", JOptionPane.INFORMATION_MESSAGE, questionmark);
+				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERSBE, Messages.getString("MainWindow.TitleHelp1"), JOptionPane.INFORMATION_MESSAGE, questionmark); //$NON-NLS-1$
 			}
 		});	
 		btnHelpSBE.setIcon(questionmark);
 		btnHelpSBE.setBounds(267, 10, 30, 32);
 		panelControls.add(btnHelpSBE);
 		
-		JButton btnHelpCO2 = new JButton("");
+		JButton btnHelpCO2 = new JButton(""); //$NON-NLS-1$
 		btnHelpCO2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERCO2, "Hilfe", JOptionPane.INFORMATION_MESSAGE, questionmark);
+				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERCO2, Messages.getString("MainWindow.TtileHelp2"), JOptionPane.INFORMATION_MESSAGE, questionmark); //$NON-NLS-1$
 			}
 		});	
 		btnHelpCO2.setIcon(questionmark);
@@ -266,15 +263,15 @@ public class MainWindow implements ChangeListener {
 		panelControls.add(btnHelpCO2);
 		
 		JTextPane txtLabelSliderSBE = new JTextPane();
-		txtLabelSliderSBE.setContentType("text/html");
+		txtLabelSliderSBE.setContentType("text/html"); //$NON-NLS-1$
 		txtLabelSliderSBE.setEditable(false);
-		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background"));
+		txtLabelSliderSBE.setBackground(UIManager.getColor("Label.background")); //$NON-NLS-1$
 		txtLabelSliderSBE.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderSBE.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		txtLabelSliderSBE.setBounds(38, 10, 205, 32);
 		panelControls.add(txtLabelSliderSBE);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.panel_1.borderTitle"), //$NON-NLS-2$ //$NON-NLS-3$
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.panel_1.borderTitle"),  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(57, 251, 197, 137);
 		panelControls.add(panel_1);
@@ -289,23 +286,23 @@ public class MainWindow implements ChangeListener {
 		// NOTE: the label text will be dynamically set by updateValueDisplays()
 		// so it does not matter what we put in here. We should put some text to help
 		// with GUI building.
-		this.lblpH = new JLabel("pH: NaN");
+		this.lblpH = new JLabel("pH: NaN"); //$NON-NLS-1$
 		lblpH.setBounds(10, 110, 178, 16);
 		panel_1.add(lblpH);
 
-		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L");
+		this.lblHCO3 = new JLabel("[HCO3-] x mmol/L"); //$NON-NLS-1$
 		lblHCO3.setBounds(10, 50, 178, 16);
 		panel_1.add(lblHCO3);
 
-		this.lblBE = new JLabel("BE x mmol/L");
+		this.lblBE = new JLabel("BE x mmol/L"); //$NON-NLS-1$
 		lblBE.setBounds(10, 80, 178, 16);
 		panel_1.add(lblBE);
 
-		this.lblpCO2 = new JLabel("pCO2");
+		this.lblpCO2 = new JLabel("pCO2"); //$NON-NLS-1$
 		lblpCO2.setBounds(10, 20, 178, 16);
 		panel_1.add(lblpCO2);
 
-		this.lblCO2 = new JLabel("CO2: x mmol/L");
+		this.lblCO2 = new JLabel("CO2: x mmol/L"); //$NON-NLS-1$
 		lblCO2.setBounds(95, 210, 180, 16);
 		panelControls.add(lblCO2);
 
@@ -350,7 +347,7 @@ public class MainWindow implements ChangeListener {
 				sliderLabel2.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderCO2")); //$NON-NLS-1$ //$NON-NLS-2$
 				sliderLabel2.setBounds(38, 120, 205, 43);
 				sliderLabel2.setEditable(false);
-				sliderLabel2.setBackground(UIManager.getColor("Label.background"));
+				sliderLabel2.setBackground(UIManager.getColor("Label.background")); //$NON-NLS-1$
 				panelControls.add(sliderLabel2);
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnReset.addActionListener(new ActionListener() {
@@ -370,9 +367,9 @@ public class MainWindow implements ChangeListener {
 		mntmberSureBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmSBDemo,
-						String.format("%s (Version %s)\n%s", MainWindow.APP_NAME, 
+						String.format(Messages.getString("MainWindow.VersionFormatStr"), MainWindow.APP_NAME,  //$NON-NLS-1$
 								MainWindow.APP_VERSION,MainWindow.COPYRIGHT),
-						"About",JOptionPane.PLAIN_MESSAGE);
+						Messages.getString("MainWindow.TitleAbout"),JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 			}
 		});
 		mnDatei.add(mntmberSureBase);
