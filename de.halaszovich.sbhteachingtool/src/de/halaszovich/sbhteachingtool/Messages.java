@@ -1,4 +1,5 @@
 package de.halaszovich.sbhteachingtool;
+// string externalization in part performed via this class
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
