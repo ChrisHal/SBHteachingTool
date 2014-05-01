@@ -24,7 +24,8 @@ public class GraphSurface extends JPanel {
 			MIN_pCO2=13,MAX_pCO2=80, STD_pCO2=40,
 			MIN_BE=-15e-3,MAX_BE=15e-3, STD_BE=0,
 			MIN_HCO3=.008,MAX_HCO3=.041,STD_HCO3=.024;
-	private static final int CROSS_OFFSET=5, POINTSTOKEEP=100; // offset to use when drawing a cross
+	private static final int CROSS_OFFSET=5, // offset to use when drawing a cross
+			POINTSTOKEEP=200; // number of data points that will be kept in buffer for trace drawing
 	private int AxisOffsetLeft, AxisOffsetBottom, AxisOffsetRight, AxisOffsetTop, LeftAxisGap;
 	private MainWindow Parent;
 	private Font LabelFont=null;
@@ -33,7 +34,7 @@ public class GraphSurface extends JPanel {
 	// the "trails" also in this class.
 	
 	private int insertPos;
-	private double[] ph=null,pco2=null,be=null,hco3=null;
+	private double[] ph=null,pco2=null,be=null,hco3=null; // will be used as ring-buffer
 	
 	public GraphSurface(MainWindow parent, int axisOffsetLeft, int axisOffsetBottom,
 			int axisOffsetRight, int axisOffsetTop, int leftAxisGap) {
@@ -44,7 +45,7 @@ public class GraphSurface extends JPanel {
 		AxisOffsetRight = axisOffsetRight;
 		AxisOffsetTop = axisOffsetTop;
 		LeftAxisGap = leftAxisGap;
-		LabelFont = new Font("Arial", Font.PLAIN, 16);
+		LabelFont = new Font("Arial", Font.PLAIN, 16); //$NON-NLS-1$
 		insertPos=0;
 		ph=new double[POINTSTOKEEP];
 		Arrays.fill(ph, STD_PH);
@@ -80,6 +81,8 @@ public class GraphSurface extends JPanel {
 		}
 		g2d.draw(p);
 	}
+	
+	// grap data from parent MainWindow and store it in local ring buffer
 	public void grapData() {
 		ph[insertPos]=-Math.log10(Parent.getHp());
 		pco2[insertPos]=Parent.getpCO2();
@@ -97,7 +100,7 @@ public class GraphSurface extends JPanel {
 		        BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
 		g2d.setFont(LabelFont);
 		FontMetrics fm=g2d.getFontMetrics();
-		int spacing=fm.stringWidth("n");
+		int spacing=fm.stringWidth("n"); //$NON-NLS-1$
 		g2d.setColor(Color.black);
 
 		Dimension size = getSize();
@@ -118,20 +121,20 @@ public class GraphSurface extends JPanel {
 		g2d.drawLine(pxLeft, pxTop, pxRight, pxTop); // horizontal line
 		
 		g2d.drawLine(pxLeft, pxTop, pxLeft, pxBottom);
-		g2d.drawString("pCO2", pxLeft+spacing, (pxBottom+pxTop)/2);
+		g2d.drawString("pCO2", pxLeft+spacing, (pxBottom+pxTop)/2); //$NON-NLS-1$
 		CoordinateScaler xscale=new CoordinateScaler(pxLeft,pxRight,MIN_PH,MAX_PH);
 		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2);
 		
 		// add values to axis
-		leftlabel=String.format("%.1f",MIN_PH);
-		rightlabel=String.format("%.1f", MAX_PH);
+		leftlabel=String.format("%.1f",MIN_PH); //$NON-NLS-1$
+		rightlabel=String.format("%.1f", MAX_PH); //$NON-NLS-1$
 		labelx=pxLeft;labely=AxisOffsetTop+fm.getAscent();
-		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
+		g2d.drawString("pH", (pxLeft+pxRight)/2, labely); //$NON-NLS-1$
 		g2d.drawString(leftlabel, labelx, labely);
 		labelx=pxRight-fm.stringWidth(rightlabel);
 		g2d.drawString(rightlabel, labelx, labely);
-		toplabel=String.format("%.0fmmHg", MAX_pCO2);
-		bottomlabel=String.format("%.0fmmHg", MIN_pCO2);
+		toplabel=String.format("%.0fmmHg", MAX_pCO2); //$NON-NLS-1$
+		bottomlabel=String.format("%.0fmmHg", MIN_pCO2); //$NON-NLS-1$
 		labelx=pxLeft+spacing/2;
 		labely=pxTop+fm.getAscent();
 		g2d.drawString(toplabel, labelx, labely);
@@ -157,7 +160,7 @@ public class GraphSurface extends JPanel {
 		pxBottom=pxTop+verAxisLen;
 		g2d.drawLine(pxLeft,pxTop,pxLeft,pxBottom);
 	
-		final String label="[HCO3-]aktuell";
+		final String label=Messages.getString("GraphSurface.labelHCO3"); //$NON-NLS-1$
 		
 //		int textwidth=fm.stringWidth(label);
 //		AffineTransform at = new AffineTransform();
@@ -168,8 +171,8 @@ public class GraphSurface extends JPanel {
 		g2d.drawString(label,pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
 //		g2d.setTransform(oldat);
 		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3);
-		toplabel=String.format("%2.0fmM", 1000*MAX_HCO3);
-		bottomlabel=String.format("%2.0fmM", 1000*MIN_HCO3);
+		toplabel=String.format("%2.0fmM", 1000*MAX_HCO3); //$NON-NLS-1$
+		bottomlabel=String.format("%2.0fmM", 1000*MIN_HCO3); //$NON-NLS-1$
 		labely=pxTop+fm.getAscent();
 		g2d.drawString(toplabel, labelx, labely);
 		labely=pxBottom-fm.getDescent();
@@ -189,18 +192,18 @@ public class GraphSurface extends JPanel {
 		pxTop=pxBottom+LeftAxisGap;
 		pxBottom=pxTop+verAxisLen;
 		g2d.setStroke(brokenline);
-		leftlabel=String.format("%.1f",MIN_PH);
-		rightlabel=String.format("%.1f", MAX_PH);
+		leftlabel=String.format("%.1f",MIN_PH); //$NON-NLS-1$
+		rightlabel=String.format("%.1f", MAX_PH); //$NON-NLS-1$
 		labelx=pxLeft;labely=pxBottom+fm.getAscent();
 		g2d.drawString(leftlabel, labelx, labely);
 		labelx=pxRight-fm.stringWidth(rightlabel);
 		g2d.drawString(rightlabel, labelx, labely);
-		g2d.drawString("pH", (pxLeft+pxRight)/2, labely);
+		g2d.drawString("pH", (pxLeft+pxRight)/2, labely); //$NON-NLS-1$
 		g2d.drawLine(stdX, pxTop, stdX, pxBottom);
-		g2d.drawString("BE", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
+		g2d.drawString("BE", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2); //$NON-NLS-1$
 		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_BE,MAX_BE);
-		toplabel=String.format("%2.0fmM", 1000*MAX_BE);
-		bottomlabel=String.format("%2.0fmM", 1000*MIN_BE);
+		toplabel=String.format("%2.0fmM", 1000*MAX_BE); //$NON-NLS-1$
+		bottomlabel=String.format("%2.0fmM", 1000*MIN_BE); //$NON-NLS-1$
 		labelx=pxLeft+spacing/2;
 		labely=pxTop+fm.getAscent();
 		g2d.drawString(toplabel, labelx, labely);

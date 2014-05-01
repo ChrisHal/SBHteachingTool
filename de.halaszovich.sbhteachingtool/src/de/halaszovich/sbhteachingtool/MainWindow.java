@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME=Messages.getString("MainWindow.AppNAme"), //$NON-NLS-1$ // used eclipse's mechanism for this one
-		APP_VERSION="rc2.0", //$NON-NLS-1$
+		APP_VERSION=Messages.getString("MainWindow.APP_VERSION"), //$NON-NLS-1$
 		COPYRIGHT="(C) Christian R. Halaszovich", //$NON-NLS-1$
 		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE"); //$NON-NLS-1$ //$NON-NLS-2$
 	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");; //$NON-NLS-1$ //$NON-NLS-2$
