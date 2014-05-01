@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -136,7 +137,8 @@ public class MainWindow implements ChangeListener {
 			public  void setParent(MainWindow mw) {
 				w=mw;
 			}
-		    public double value(double HA) {
+		    @Override
+			public double value(double HA) {
 		        double y = w.getSBE()+stdSID-K1*HA/(HA-tot)+Kw*(HA-tot)/K1/HA-tot+HA+K2*w.getCO2()*(HA-tot)/K1/HA;
 		        return y;
 		    }
@@ -149,7 +151,7 @@ public class MainWindow implements ChangeListener {
 		final double absoluteAccuracy = 1.0e-12;
 		final int    maxOrder         = 5;
 		UnivariateSolver solver   = new BracketingNthOrderBrentSolver(relativeAccuracy, absoluteAccuracy, maxOrder);
-		double y = solver.solve(100, (UnivariateFunction)function, .001, .0479,.024);
+		double y = solver.solve(100, function, .001, .0479,.024);
 		return y;
 	}
 	
@@ -183,6 +185,7 @@ public class MainWindow implements ChangeListener {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
@@ -204,13 +207,14 @@ public class MainWindow implements ChangeListener {
 	}
 
 	 /** Listen to the slider. */
-    public void stateChanged(ChangeEvent e) {
+    @Override
+	public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
         int val=source.getValue();
         if (source==this.sliderSBE) {
-        	this.SBE=1e-3*(double)val;
+        	this.SBE=1e-3*val;
         } else if(source==this.sliderpCO2) {
-        	this.CO2=(double)val/CO2concToPressure;
+        	this.CO2=val/CO2concToPressure;
         }
         this.updateValues();
         this.graphSurface.grapData();
@@ -246,6 +250,7 @@ public class MainWindow implements ChangeListener {
 		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/Question.gif")); //$NON-NLS-1$
 		JButton btnHelpSBE = new JButton(""); //$NON-NLS-1$
 		btnHelpSBE.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERSBE, Messages.getString("MainWindow.TitleHelp1"), JOptionPane.INFORMATION_MESSAGE, questionmark); //$NON-NLS-1$
 			}
@@ -256,6 +261,7 @@ public class MainWindow implements ChangeListener {
 		
 		JButton btnHelpCO2 = new JButton(""); //$NON-NLS-1$
 		btnHelpCO2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(panelControls, MainWindow.INFO_SLIDERCO2, Messages.getString("MainWindow.TtileHelp2"), JOptionPane.INFORMATION_MESSAGE, questionmark); //$NON-NLS-1$
 			}
@@ -308,7 +314,7 @@ public class MainWindow implements ChangeListener {
 		lblCO2.setBounds(40, 210, 255, 16);
 		panelControls.add(lblCO2);
 
-		sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
+		sliderSBE = new JSlider(SwingConstants.HORIZONTAL,-15,15,0);
 		sliderSBE.setBounds(28, 45, 269, 52);
 		panelControls.add(sliderSBE);
 		sliderSBE.addChangeListener(this);
@@ -330,7 +336,7 @@ public class MainWindow implements ChangeListener {
 		separator_1.setBounds(10, 238, 290, 2);
 		panelControls.add(separator_1);
 		
-		this.sliderpCO2 = new JSlider(JSlider.HORIZONTAL,14,80,40);
+		this.sliderpCO2 = new JSlider(SwingConstants.HORIZONTAL,14,80,40);
 		sliderpCO2.setBounds(28, 158, 269, 52);
 		panelControls.add(sliderpCO2);
 		sliderpCO2.addChangeListener(this);
@@ -361,6 +367,7 @@ public class MainWindow implements ChangeListener {
 				panelControls.add(sliderLabel2);
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnReset.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				resetValues();
 			}
@@ -375,6 +382,7 @@ public class MainWindow implements ChangeListener {
 		
 		JMenuItem mntmberSureBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmberSureBase.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmSBDemo,
 						String.format(Messages.getString("MainWindow.VersionFormatStr"), MainWindow.APP_NAME,  //$NON-NLS-1$
