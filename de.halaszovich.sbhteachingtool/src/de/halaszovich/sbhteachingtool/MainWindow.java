@@ -43,15 +43,11 @@ public class MainWindow implements ChangeListener {
 	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");; //$NON-NLS-1$ //$NON-NLS-2$
 	private JFrame frmSBDemo;
 	private JLabel lblpH, lblCO2, lblpCO2, lblBE, lblHCO3;
-	private JSlider sliderSBE, sliderCO2;
+	private JSlider sliderSBE, sliderpCO2;
 	private GraphSurface graphSurface;
 	private static final double STD_CO2=0.0012;
 	private double Hp=1e-7, HA, pCO2, CO2=STD_CO2, Am, HCO3, SBE;
 	
-	public double getBE() {
-		return Am+HCO3-0.048;
-	}
-
 	// some constants
 	static final double K1 = 3.98107e-08; // pK1=7.4
 	static final double K2 = 7.94328e-07;	// pK2=6.1
@@ -59,11 +55,15 @@ public class MainWindow implements ChangeListener {
 	static final double tot = 0.048; // total buffer base = [A-]+[HA]
 	static final double stdSID = 0.04796; // strong ion differenz, tailored to make HA=0.024 for std. conditions
 	static final double CO2concToPressure = 33333.3; // factor to convert mol/L to mmHg
+	private static final double STD_pCO2 = 40.0;
 	
 	//private static final String APPNAME = "Säure Base Demo";
 	private JPanel panelControls;
 
-
+	public double getBE() {
+		double be=Am+HCO3-MainWindow.tot;
+		return be;
+	}
 
 
 	public double getHp() {
@@ -164,14 +164,15 @@ public class MainWindow implements ChangeListener {
 		this.lblpH.setText(String.format("pH = %.2f",(-Math.log10(this.Hp)))); //$NON-NLS-1$
 		this.lblCO2.setText(String.format("[CO2] = %.1f mmol/L",this.CO2*1000.)); //$NON-NLS-1$
 		this.lblpCO2.setText(String.format("pCO2 = %.0f mmHg",this.pCO2)); //$NON-NLS-1$
-		this.lblHCO3.setText(String.format(Messages.getString("MainWindow.LabelHCO3akt"),this.HCO3*1000.)); //$NON-NLS-1$
-		this.lblBE.setText(String.format("BE = %.1f mmol/L",1000.*(Am+HCO3-0.048))); //$NON-NLS-1$
+		this.lblHCO3.setText(String.format(Messages.getString("MainWindow.LabelHCO3akt"),this.HCO3*1000.0)); //$NON-NLS-1$
+		this.lblBE.setText(String.format("BE = %.1f mmol/L",Math.round(10000.0*this.getBE())/10.0));// round to nearest 0.1 //$NON-NLS-1$
+				// some tricks to avoid leading zero
 		this.graphSurface.repaint();
 	}
 	
 	private void resetValues(){
 		this.sliderSBE.setValue(0);
-		this.sliderCO2.setValue(12);//matches std. [CO2] of 1.2 mmol/l
+		this.sliderpCO2.setValue((int)STD_pCO2);//matches std. [CO2] of 1.2 mmol/l
 		updateValues();
 		this.graphSurface.resetGraph();
 		updateValueDisplays();
@@ -207,8 +208,8 @@ public class MainWindow implements ChangeListener {
         int val=source.getValue();
         if (source==this.sliderSBE) {
         	this.SBE=1e-3*(double)val;
-        } else if(source==this.sliderCO2) {
-        	this.CO2=1e-4*(double)val;
+        } else if(source==this.sliderpCO2) {
+        	this.CO2=(double)val/CO2concToPressure;
         }
         this.updateValues();
         this.graphSurface.grapData();
@@ -328,15 +329,15 @@ public class MainWindow implements ChangeListener {
 		separator_1.setBounds(10, 238, 290, 2);
 		panelControls.add(separator_1);
 		
-		this.sliderCO2 = new JSlider(JSlider.HORIZONTAL,4,24,12);
-		sliderCO2.setBounds(28, 158, 269, 52);
-		panelControls.add(sliderCO2);
-		sliderCO2.addChangeListener(this);
+		this.sliderpCO2 = new JSlider(JSlider.HORIZONTAL,14,80,40);
+		sliderpCO2.setBounds(28, 158, 269, 52);
+		panelControls.add(sliderpCO2);
+		sliderpCO2.addChangeListener(this);
 		//Turn on labels at major tick marks.
-		sliderCO2.setMajorTickSpacing(10);
-		sliderCO2.setMinorTickSpacing(1);
-		sliderCO2.setPaintTicks(true);
-		sliderCO2.setPaintLabels(true);
+		sliderpCO2.setMajorTickSpacing(10);
+		sliderpCO2.setMinorTickSpacing(5);
+		sliderpCO2.setPaintTicks(true);
+		sliderpCO2.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
 //				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
