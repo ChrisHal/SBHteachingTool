@@ -379,8 +379,11 @@ public class MainWindow implements ChangeListener {
 		
 		JMenu mnDatei = new JMenu(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mnDatei.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnDatei);
-		
+		mnDatei.setMnemonic(
+				java.awt.event.KeyEvent.getExtendedKeyCodeForChar(Messages.getString("MainWindow.mnDatei").charAt(0)));
 		JMenuItem mntmberSureBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmberSureBase.setMnemonic(
+				java.awt.event.KeyEvent.getExtendedKeyCodeForChar(Messages.getString("MainWindow.mnDateiItem").charAt(0)));
 		mntmberSureBase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
