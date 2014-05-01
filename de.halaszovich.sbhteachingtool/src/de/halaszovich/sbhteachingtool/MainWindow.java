@@ -32,12 +32,13 @@ import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 
+import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 public class MainWindow implements ChangeListener {
 	public static final String 
 		APP_NAME=Messages.getString("MainWindow.AppNAme"), //$NON-NLS-1$ // used eclipse's mechanism for this one
-		APP_VERSION="1.1", //$NON-NLS-1$
+		APP_VERSION="rc2.0", //$NON-NLS-1$
 		COPYRIGHT="(C) Christian R. Halaszovich", //$NON-NLS-1$
 		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE"); //$NON-NLS-1$ //$NON-NLS-2$
 	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");; //$NON-NLS-1$ //$NON-NLS-2$
@@ -162,7 +163,7 @@ public class MainWindow implements ChangeListener {
 	
 	private void updateValueDisplays() {
 		this.lblpH.setText(String.format("pH = %.2f",(-Math.log10(this.Hp)))); //$NON-NLS-1$
-		this.lblCO2.setText(String.format("[CO2] = %.1f mmol/L",this.CO2*1000.)); //$NON-NLS-1$
+		this.lblCO2.setText(String.format("pCO2 = %.0f mmHg, [CO2] = %.1f mmol/L",this.pCO2,this.CO2*1000.)); //$NON-NLS-1$
 		this.lblpCO2.setText(String.format("pCO2 = %.0f mmHg",this.pCO2)); //$NON-NLS-1$
 		this.lblHCO3.setText(String.format(Messages.getString("MainWindow.LabelHCO3akt"),this.HCO3*1000.0)); //$NON-NLS-1$
 		this.lblBE.setText(String.format("BE = %.1f mmol/L",Math.round(10000.0*this.getBE())/10.0));// round to nearest 0.1 //$NON-NLS-1$
@@ -304,7 +305,7 @@ public class MainWindow implements ChangeListener {
 		panel_1.add(lblpCO2);
 
 		this.lblCO2 = new JLabel("CO2: x mmol/L"); //$NON-NLS-1$
-		lblCO2.setBounds(95, 210, 180, 16);
+		lblCO2.setBounds(40, 210, 255, 16);
 		panelControls.add(lblCO2);
 
 		sliderSBE = new JSlider(JSlider.HORIZONTAL,-15,15,0);
@@ -334,9 +335,17 @@ public class MainWindow implements ChangeListener {
 		panelControls.add(sliderpCO2);
 		sliderpCO2.addChangeListener(this);
 		//Turn on labels at major tick marks.
-		sliderpCO2.setMajorTickSpacing(10);
-		sliderpCO2.setMinorTickSpacing(5);
-		sliderpCO2.setPaintTicks(true);
+		sliderpCO2.setMajorTickSpacing(2);
+		// sliderpCO2.setMinorTickSpacing(5);
+		 sliderpCO2.setPaintTicks(true);
+		
+		// setting up custom labels
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer,JLabel>();
+		int i;
+		for(i=20;i<=80;i+=10) {
+			labelTable.put(new Integer(i), new JLabel(String.format("%d",i)));
+		}
+		sliderpCO2.setLabelTable(labelTable);
 		sliderpCO2.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
@@ -344,7 +353,7 @@ public class MainWindow implements ChangeListener {
 //						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
 //						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
 //						+"die Kompensation einer metabol. Azidose.</html>");
-				sliderLabel2.setContentType(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.sliderLabel2.contentType_1")); //$NON-NLS-1$ //$NON-NLS-2$
+				sliderLabel2.setContentType("text/html");
 				sliderLabel2.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderCO2")); //$NON-NLS-1$ //$NON-NLS-2$
 				sliderLabel2.setBounds(38, 120, 205, 43);
 				sliderLabel2.setEditable(false);
