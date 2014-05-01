@@ -1,3 +1,4 @@
 todo list:
+for Version 1.1:
 change slider from [CO2] to pCO2, since this is probably easier for the students.
 (Will need changing of some texts / translations)
