@@ -240,7 +240,7 @@ public class MainWindow implements ChangeListener {
 		frmSBDemo.setTitle(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.frmSBDemo.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		frmSBDemo.setBounds(100, 100, 708, height);
 //		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSBDemo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // this seems to be the recommended behavior? On Mac OS X, this will not exit the app!
+		frmSBDemo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // this seems to be the recommended behavior?
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{316, 346, 0};
 		gridBagLayout.rowHeights = new int[]{450, 0};

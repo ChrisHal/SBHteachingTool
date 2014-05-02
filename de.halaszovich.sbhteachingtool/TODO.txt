@@ -5,4 +5,5 @@ change slider from [CO2] to pCO2, since this is probably easier for the students
 
 for Version 2.0:
 add menu mnemonics (for every supported lcoale)  - done
-add File -> quit entry with shortcut
+add File -> quit menu entry with shortcut (CTRL+Q) 	done
+
