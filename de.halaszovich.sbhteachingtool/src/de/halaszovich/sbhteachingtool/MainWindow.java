@@ -186,6 +186,7 @@ public class MainWindow implements ChangeListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+	//	System.out.println(MainWindow.isAtLeastJava1_7());
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -208,6 +209,13 @@ public class MainWindow implements ChangeListener {
 		updateValueDisplays();
 	}
 
+	static boolean isAtLeastJava1_7() {
+		String version=System.getProperty("java.version");
+		String[] parts=version.split("\\.",3);
+		final int MAJORVER=1, MINORVER=7;
+		return parts.length > 1 && 
+				Integer.parseInt(parts[0])>=MAJORVER && Integer.parseInt(parts[1])>=MINORVER;
+	}
 	 /** Listen to the slider. */
     @Override
 	public void stateChanged(ChangeEvent e) {
@@ -383,11 +391,22 @@ public class MainWindow implements ChangeListener {
 		
 		JMenu mnDatei = new JMenu(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mnDatei.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		menuBar.add(mnDatei);
-		mnDatei.setMnemonic(
-				java.awt.event.KeyEvent.getExtendedKeyCodeForChar(Messages.getString("MainWindow.mnDatei").charAt(0)));
+		char mnemonickey=Messages.getString("MainWindow.mnDatei").charAt(0);
+		if (MainWindow.isAtLeastJava1_7()) {
+			// suppoer in >=1.7
+			mnDatei.setMnemonic(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(mnemonickey));
+		} else {
+			//obsolete in >=1.7
+			mnDatei.setMnemonic(mnemonickey);
+		}
+		mnemonickey=Messages.getString("MainWindow.mnDateiItem").charAt(0);
 		JMenuItem mntmberSureBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		mntmberSureBase.setMnemonic(
-				java.awt.event.KeyEvent.getExtendedKeyCodeForChar(Messages.getString("MainWindow.mnDateiItem").charAt(0)));
+		if(MainWindow.isAtLeastJava1_7()) {
+			mntmberSureBase.setMnemonic(
+					java.awt.event.KeyEvent.getExtendedKeyCodeForChar(mnemonickey));
+		} else {
+			mntmberSureBase.setMnemonic(mnemonickey);
+		}
 		mntmberSureBase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
