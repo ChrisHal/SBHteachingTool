@@ -412,7 +412,8 @@ public class MainWindow implements ChangeListener {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmSBDemo,
 						String.format(Messages.getString("MainWindow.VersionFormatStr"), MainWindow.APP_NAME,  //$NON-NLS-1$
-								MainWindow.APP_VERSION,MainWindow.COPYRIGHT),
+								MainWindow.APP_VERSION, System.getProperty("java.version"),
+								MainWindow.COPYRIGHT),
 						Messages.getString("MainWindow.TitleAbout"),JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 			}
 		});
@@ -421,8 +422,8 @@ public class MainWindow implements ChangeListener {
 		JMenuItem mntmQuit = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmSBDemo.dispose(); // will not shutdoen app on Mac OS X
-				//frmSBDemo.setVisible(false); // should trigger closing of app (but not on Mac OS X)
+				frmSBDemo.dispose(); // seems to close app sometimes on Mac OS X
+				//frmSBDemo.setVisible(false); // should trigger closing of app (not on Mac OS X)
 			}
 		});
 		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
