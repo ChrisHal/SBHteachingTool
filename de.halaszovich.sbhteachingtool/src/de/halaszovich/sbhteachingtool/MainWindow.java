@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -229,7 +231,8 @@ public class MainWindow implements ChangeListener {
 		frmSBDemo = new JFrame();
 		frmSBDemo.setTitle(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.frmSBDemo.title")); //$NON-NLS-1$ //$NON-NLS-2$
 		frmSBDemo.setBounds(100, 100, 708, height);
-		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
+//		frmSBDemo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSBDemo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // this seems to be the recommended behavior? On Mac OS X, this will not exit the app!
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{316, 346, 0};
 		gridBagLayout.rowHeights = new int[]{450, 0};
@@ -324,7 +327,8 @@ public class MainWindow implements ChangeListener {
 		sliderSBE.setPaintTicks(true);
 		sliderSBE.setPaintLabels(true);
 
-		JButton btnReset = new JButton(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.btnReset.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		JButton btnReset = new JButton(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").
+				getString("MainWindow.btnReset.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnReset.setBounds(73, 397, 164, 29);
 		panelControls.add(btnReset);
 
@@ -394,6 +398,16 @@ public class MainWindow implements ChangeListener {
 			}
 		});
 		mnDatei.add(mntmberSureBase);
+		
+		JMenuItem mntmQuit = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmSBDemo.dispose(); // will not shutdoen app on Mac OS X
+				//frmSBDemo.setVisible(false); // should trigger closing of app (but not on Mac OS X)
+			}
+		});
+		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+		mnDatei.add(mntmQuit);
 
 		this.graphSurface=new GraphSurface(this, 10,5,10,5,10);
 		graphSurface.setBackground(Color.white);
