@@ -367,10 +367,6 @@ public class MainWindow implements ChangeListener {
 		sliderpCO2.setPaintLabels(true);
 				
 				JTextPane sliderLabel2 = new JTextPane();
-//				sliderLabel2.setToolTipText("<html>Werte >1,2 mmol/L (Hypoventilation, entspr. >40 mmHg pCO2)<br>"
-//						+"simulieren eine respiratorische Azidose oder Kompensation<br>"
-//						+"einer metabol. Alkalose, kleinere Werte (Hyperventilation) eine Alkalose oder<br>"
-//						+"die Kompensation einer metabol. Azidose.</html>");
 				sliderLabel2.setContentType("text/html");
 				sliderLabel2.setText(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.txtLabelSliderCO2")); //$NON-NLS-1$ //$NON-NLS-2$
 				sliderLabel2.setBounds(38, 120, 205, 43);
@@ -393,7 +389,7 @@ public class MainWindow implements ChangeListener {
 		menuBar.add(mnDatei);
 		char mnemonickey=Messages.getString("MainWindow.mnDatei").charAt(0);
 		if (MainWindow.isAtLeastJava1_7()) {
-			// suppoer in >=1.7
+			// supported in >=1.7
 			mnDatei.setMnemonic(java.awt.event.KeyEvent.getExtendedKeyCodeForChar(mnemonickey));
 		} else {
 			//obsolete in >=1.7
@@ -417,6 +413,15 @@ public class MainWindow implements ChangeListener {
 						Messages.getString("MainWindow.TitleAbout"),JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 			}
 		});
+		
+		JMenuItem mntmReset = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmReset.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		mntmReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				resetValues();
+			}
+		});
+		mntmReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,ActionEvent.CTRL_MASK));
+		mnDatei.add(mntmReset);
 		mnDatei.add(mntmberSureBase);
 		
 		JMenuItem mntmQuit = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -427,6 +432,7 @@ public class MainWindow implements ChangeListener {
 			}
 		});
 		mntmQuit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+		mnDatei.addSeparator();
 		mnDatei.add(mntmQuit);
 
 		this.graphSurface=new GraphSurface(this, 10,5,10,5,10);
