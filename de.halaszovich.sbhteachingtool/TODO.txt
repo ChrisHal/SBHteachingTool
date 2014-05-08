@@ -7,3 +7,6 @@ for Version 2.0:
 add menu mnemonics (for every supported lcoale)  - done
 add File -> quit menu entry with shortcut (CTRL+Q) 	done
 
+simplify mathematics: use approximation (using mainly the fact that SBE is approx. same as BE)
+This should be more performant than using the non-linear solver since we will end up with a 2nd order
+polynomial that can be easily analytically solved.
