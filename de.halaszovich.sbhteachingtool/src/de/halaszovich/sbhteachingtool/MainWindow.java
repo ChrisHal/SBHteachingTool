@@ -22,9 +22,9 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver;
-import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
+//import org.apache.commons.math3.analysis.UnivariateFunction;
+//import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver;
+//import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
 
 import java.awt.Color;
 import java.awt.GridBagLayout;
@@ -134,27 +134,40 @@ public class MainWindow implements ChangeListener {
 	}
 	
 	//find root of this function to get HA = conc. of un-diss. buffer acid
-	public class rootHA implements UnivariateFunction {
-			private  MainWindow w=null;
-			public  void setParent(MainWindow mw) {
-				w=mw;
-			}
-		    @Override
-			public double value(double HA) {
-		        double y = w.getSBE()+stdSID-K1*HA/(HA-tot)+Kw*(HA-tot)/K1/HA-tot+HA+K2*w.getCO2()*(HA-tot)/K1/HA;
-		        return y;
-		    }
-		}
-		
+//	public class rootHA implements UnivariateFunction {
+//			private  MainWindow w=null;
+//			public  void setParent(MainWindow mw) {
+//				w=mw;
+//			}
+//		    @Override
+//			public double value(double HA) {
+//		        double y = w.getSBE()+stdSID-K1*HA/(HA-tot)+Kw*(HA-tot)/K1/HA-tot+HA+K2*w.getCO2()*(HA-tot)/K1/HA;
+//		        return y;
+//		    }
+//		}
+//		
 	private double calcHA() {
-		MainWindow.rootHA function =  new MainWindow.rootHA();
-		function.setParent(this);
-		double relativeAccuracy = 1.0e-15;
-		final double absoluteAccuracy = 1.0e-12;
-		final int    maxOrder         = 5;
-		UnivariateSolver solver   = new BracketingNthOrderBrentSolver(relativeAccuracy, absoluteAccuracy, maxOrder);
-		double y = solver.solve(100, function, .001, .0479,.024);
-		return y;
+//		MainWindow.rootHA function =  new MainWindow.rootHA();
+//		function.setParent(this);
+//		double relativeAccuracy = 1.0e-15;
+//		final double absoluteAccuracy = 1.0e-12;
+//		final int    maxOrder         = 5;
+//		UnivariateSolver solver   = new BracketingNthOrderBrentSolver(relativeAccuracy, absoluteAccuracy, maxOrder);
+//		double y = solver.solve(100, function, .001, .0479,.024);
+//		return y;
+		double _SBE=this.getSBE(), _CO2=this.getCO2();
+		double t5 = K1*K1,      t6 = _SBE*_SBE,
+	      t11 = stdSID*stdSID,
+	      t13 = K1*K2,
+	      t20 = t5*tot,
+	      t25 = K2*K2,
+	      t26 = CO2*CO2,
+	      t31 = tot*tot,
+	      t34 = Math.sqrt(t5*t6+2.0*t5*_SBE*stdSID+t5*t11+2.0*t13*_CO2*_SBE+2.0*t13*_CO2*
+	stdSID-2.0*t20*_SBE-2.0*t20*stdSID+t25*t26+2.0*t13*_CO2*tot+t31*t5),
+	      t38 = (-K1*_SBE-K1*stdSID-K2*_CO2+tot*K1+t34)/K1/2.0;
+		return t38;
+
 	}
 	
 	private void updateValues() {
