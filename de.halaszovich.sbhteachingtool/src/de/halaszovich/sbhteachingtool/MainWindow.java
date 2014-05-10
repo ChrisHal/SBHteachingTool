@@ -22,10 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-//import org.apache.commons.math3.analysis.UnivariateFunction;
-//import org.apache.commons.math3.analysis.solvers.BracketingNthOrderBrentSolver;
-//import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
-
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -127,46 +123,25 @@ public class MainWindow implements ChangeListener {
 	}
 	
 	private void setHpFromHA() {
-		this.Hp=K1*this.HA/(tot-this.HA);
+		this.Hp = K1*this.HA/(tot-this.HA);
 	}
 	private void setHCO3FromHpCO2() {
-		this.HCO3= K2*this.CO2/this.Hp;
+		this.HCO3 = K2*this.CO2/this.Hp;
 	}
-	
-	//find root of this function to get HA = conc. of un-diss. buffer acid
-//	public class rootHA implements UnivariateFunction {
-//			private  MainWindow w=null;
-//			public  void setParent(MainWindow mw) {
-//				w=mw;
-//			}
-//		    @Override
-//			public double value(double HA) {
-//		        double y = w.getSBE()+stdSID-K1*HA/(HA-tot)+Kw*(HA-tot)/K1/HA-tot+HA+K2*w.getCO2()*(HA-tot)/K1/HA;
-//		        return y;
-//		    }
-//		}
-//		
+		
 	private double calcHA() {
-//		MainWindow.rootHA function =  new MainWindow.rootHA();
-//		function.setParent(this);
-//		double relativeAccuracy = 1.0e-15;
-//		final double absoluteAccuracy = 1.0e-12;
-//		final int    maxOrder         = 5;
-//		UnivariateSolver solver   = new BracketingNthOrderBrentSolver(relativeAccuracy, absoluteAccuracy, maxOrder);
-//		double y = solver.solve(100, function, .001, .0479,.024);
-//		return y;
-		double _SBE=this.getSBE(), _CO2=this.getCO2();
-		double t5 = K1*K1,      t6 = _SBE*_SBE,
-	      t11 = stdSID*stdSID,
-	      t13 = K1*K2,
-	      t20 = t5*tot,
-	      t25 = K2*K2,
-	      t26 = CO2*CO2,
-	      t31 = tot*tot,
-	      t34 = Math.sqrt(t5*t6+2.0*t5*_SBE*stdSID+t5*t11+2.0*t13*_CO2*_SBE+2.0*t13*_CO2*
-	stdSID-2.0*t20*_SBE-2.0*t20*stdSID+t25*t26+2.0*t13*_CO2*tot+t31*t5),
-	      t38 = (-K1*_SBE-K1*stdSID-K2*_CO2+tot*K1+t34)/K1/2.0;
-		return t38;
+		double sbe=this.getSBE(), co2=this.getCO2();
+		double t1 = K1*K1,      t2 = sbe*sbe,
+	      t3 = stdSID*stdSID,
+	      t4 = K1*K2,
+	      t5 = t1*tot,
+	      t6 = K2*K2,
+	      t7 = CO2*CO2,
+	      t8 = tot*tot,
+	      t9 = Math.sqrt(t1*t2+2.0*t1*sbe*stdSID+t1*t3+2.0*t4*co2*sbe+2.0*t4*co2*
+	stdSID-2.0*t5*sbe-2.0*t5*stdSID+t6*t7+2.0*t4*co2*tot+t8*t1),
+	      t10 = (-K1*sbe-K1*stdSID-K2*co2+tot*K1+t9)/K1/2.0;
+		return t10;
 
 	}
 	
@@ -199,7 +174,6 @@ public class MainWindow implements ChangeListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-	//	System.out.println(MainWindow.isAtLeastJava1_7());
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -316,7 +290,7 @@ public class MainWindow implements ChangeListener {
 				
 		
 		// NOTE: the label text will be dynamically set by updateValueDisplays()
-		// so it does not matter what we put in here. We should put some text to help
+		// so it does not matter what we put in here. We should put in some text to help
 		// with GUI building.
 		this.lblpH = new JLabel("pH: NaN"); //$NON-NLS-1$
 		lblpH.setBounds(10, 110, 178, 16);
@@ -409,14 +383,14 @@ public class MainWindow implements ChangeListener {
 			mnDatei.setMnemonic(mnemonickey);
 		}
 		mnemonickey=Messages.getString("MainWindow.mnDateiItem").charAt(0);
-		JMenuItem mntmberSureBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		JMenuItem mntmberAcidBase = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmberSureBase.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		if(MainWindow.isAtLeastJava1_7()) {
-			mntmberSureBase.setMnemonic(
+			mntmberAcidBase.setMnemonic(
 					java.awt.event.KeyEvent.getExtendedKeyCodeForChar(mnemonickey));
 		} else {
-			mntmberSureBase.setMnemonic(mnemonickey);
+			mntmberAcidBase.setMnemonic(mnemonickey);
 		}
-		mntmberSureBase.addActionListener(new ActionListener() {
+		mntmberAcidBase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmSBDemo,
@@ -435,7 +409,7 @@ public class MainWindow implements ChangeListener {
 		});
 		mntmReset.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,ActionEvent.CTRL_MASK));
 		mnDatei.add(mntmReset);
-		mnDatei.add(mntmberSureBase);
+		mnDatei.add(mntmberAcidBase);
 		
 		JMenuItem mntmQuit = new JMenuItem(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.mntmQuit.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		mntmQuit.addActionListener(new ActionListener() {
