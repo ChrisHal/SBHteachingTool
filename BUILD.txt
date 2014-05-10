@@ -1,3 +1,0 @@
-external jars needed for build:
-commons-math3-3.2.jar	(org.apache)
-
