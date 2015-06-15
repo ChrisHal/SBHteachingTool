@@ -3,3 +3,4 @@ bin
 de.halaszovich.sbhteachingtool/.classpath
 .settings/
 .classpath
+.DS_Store
