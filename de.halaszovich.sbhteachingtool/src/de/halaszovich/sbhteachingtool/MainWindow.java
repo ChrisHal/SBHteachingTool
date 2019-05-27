@@ -245,7 +245,7 @@ public class MainWindow implements ChangeListener {
 		panelControls.setLayout(null);
 		panelControls.setPreferredSize(null);
 		
-		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/Question.gif")); //$NON-NLS-1$
+		final ImageIcon questionmark = new ImageIcon(MainWindow.class.getResource("/Question.gif")); //$NON-NLS-1$
 		JButton btnHelpSBE = new JButton(""); //$NON-NLS-1$
 		btnHelpSBE.addActionListener(new ActionListener() {
 			@Override
