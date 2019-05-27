@@ -348,7 +348,7 @@ public class MainWindow implements ChangeListener {
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer,JLabel>();
 		int i;
 		for(i=20;i<=80;i+=10) {
-			labelTable.put(new Integer(i), new JLabel(String.format("%d",i)));
+			labelTable.put(i, new JLabel(String.format("%d",i)));
 		}
 		sliderpCO2.setLabelTable(labelTable);
 		sliderpCO2.setPaintLabels(true);
