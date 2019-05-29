@@ -33,8 +33,13 @@ import javax.swing.border.TitledBorder;
 
 import java.util.Hashtable;
 import java.util.ResourceBundle;
+import javax.swing.JCheckBox;
 
-public class MainWindow implements ChangeListener {
+public class MainWindow extends JFrame implements ChangeListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String 
 		APP_NAME=Messages.getString("MainWindow.AppNAme"), //$NON-NLS-1$ // used eclipse's mechanism for this one
 		APP_VERSION=Messages.getString("MainWindow.APP_VERSION"), //$NON-NLS-1$
@@ -279,7 +284,7 @@ public class MainWindow implements ChangeListener {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.panel_1.borderTitle"),  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(57, 251, 197, 137);
+		panel_1.setBounds(57, 266, 197, 137);
 		panelControls.add(panel_1);
 		panel_1.setLayout(null);
 		//		uncomment to get center aligned text
@@ -324,7 +329,7 @@ public class MainWindow implements ChangeListener {
 
 		JButton btnReset = new JButton(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").
 				getString("MainWindow.btnReset.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		btnReset.setBounds(73, 397, 164, 29);
+		btnReset.setBounds(73, 412, 164, 29);
 		panelControls.add(btnReset);
 
 		JSeparator separator = new JSeparator();
@@ -361,6 +366,10 @@ public class MainWindow implements ChangeListener {
 				sliderLabel2.setBackground(UIManager.getColor("Label.background")); //$NON-NLS-1$
 				panelControls.add(sliderLabel2);
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+				
+				JCheckBox chckbxLogScale = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
+				chckbxLogScale.setBounds(211, 241, 94, 21);
+				panelControls.add(chckbxLogScale);
 		btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
