@@ -337,7 +337,7 @@ public class MainWindow extends JFrame implements ChangeListener {
 		panelControls.add(separator);
 
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 238, 290, 2);
+		separator_1.setBounds(10, 254, 290, 2);
 		panelControls.add(separator_1);
 		
 		this.sliderpCO2 = new JSlider(SwingConstants.HORIZONTAL,14,80,40);
@@ -368,7 +368,7 @@ public class MainWindow extends JFrame implements ChangeListener {
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
 				JCheckBox chckbxLogScale = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
-				chckbxLogScale.setBounds(211, 241, 94, 21);
+				chckbxLogScale.setBounds(38, 227, 175, 21);
 				panelControls.add(chckbxLogScale);
 		btnReset.addActionListener(new ActionListener() {
 			@Override
