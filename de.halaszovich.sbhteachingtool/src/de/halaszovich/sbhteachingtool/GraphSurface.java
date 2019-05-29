@@ -122,8 +122,8 @@ public class GraphSurface extends JPanel {
 		
 		g2d.drawLine(pxLeft, pxTop, pxLeft, pxBottom);
 		g2d.drawString("pCO2", pxLeft+spacing, (pxBottom+pxTop)/2); //$NON-NLS-1$
-		CoordinateScaler xscale=new CoordinateScaler(pxLeft,pxRight,MIN_PH,MAX_PH);
-		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2);
+		CoordinateScaler xscale=new CoordinateScaler(pxLeft,pxRight,MIN_PH,MAX_PH, false);
+		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2, false);
 		
 		// add values to axis
 		leftlabel=String.format("%.1f",MIN_PH); //$NON-NLS-1$
@@ -170,7 +170,7 @@ public class GraphSurface extends JPanel {
 //		g2d.drawString(label,pxRight-textwidth-CROSS_OFFSET, (pxBottom+pxTop)/2);
 		g2d.drawString(label,pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
 //		g2d.setTransform(oldat);
-		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3);
+		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3, false);
 		toplabel=String.format("%2.0fmM", 1000*MAX_HCO3); //$NON-NLS-1$
 		bottomlabel=String.format("%2.0fmM", 1000*MIN_HCO3); //$NON-NLS-1$
 		labely=pxTop+fm.getAscent();
@@ -201,7 +201,7 @@ public class GraphSurface extends JPanel {
 		g2d.drawString("pH", (pxLeft+pxRight)/2, labely); //$NON-NLS-1$
 		g2d.drawLine(stdX, pxTop, stdX, pxBottom);
 		g2d.drawString("BE", pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2); //$NON-NLS-1$
-		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_BE,MAX_BE);
+		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_BE,MAX_BE, false);
 		toplabel=String.format("%2.0fmM", 1000*MAX_BE); //$NON-NLS-1$
 		bottomlabel=String.format("%2.0fmM", 1000*MIN_BE); //$NON-NLS-1$
 		labelx=pxLeft+spacing/2;
