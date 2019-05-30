@@ -9,8 +9,8 @@ add File -> quit menu entry with shortcut (CTRL+Q) 	done
 
 simplify mathematics: use approximation (using mainly the fact that SBE is approx. same as BE)
 This should be more performant than using the non-linear solver since we will end up with a 2nd order
-polynomial that can be easily analytically solved. - done (testing necessary)
+polynomial that can be easily analytically solved. - done
 
 for Version 3.0:
-add optional log scaling for BE, HCO3- and pCO2 axis
+add optional log scaling for BE, HCO3- and pCO2 axis - done
 
