@@ -455,8 +455,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 		Object source = e.getItemSelectable();
 		if(source == this.chckbxLogScale) {
 			this.graphSurface.pCO2_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
-			this.updateValues();
-			this.updateValueDisplays();
+			this.graphSurface.repaint();
 		}
 	}
 
