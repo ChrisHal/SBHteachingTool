@@ -457,8 +457,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 			this.graphSurface.pCO2_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
 			this.updateValues();
 			this.updateValueDisplays();
-			this.graphSurface.grabData();
-;		}
+		}
 	}
 
 }
