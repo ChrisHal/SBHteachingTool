@@ -24,6 +24,7 @@ public class GraphSurface extends JPanel {
 			MIN_pCO2=13,MAX_pCO2=80, STD_pCO2=40,
 			MIN_BE=-15e-3,MAX_BE=15e-3, STD_BE=0,
 			MIN_HCO3=.008,MAX_HCO3=.041,STD_HCO3=.024;
+	private static final int NUMTICKS=5;
 	public boolean pCO2_uselogscale=false;
 	private static final int CROSS_OFFSET=5, // offset to use when drawing a cross
 			POINTSTOKEEP=200; // number of data points that will be kept in buffer for trace drawing
@@ -91,6 +92,7 @@ public class GraphSurface extends JPanel {
 		hco3[insertPos]=Parent.getHCO3();
 		insertPos=(insertPos+1)%POINTSTOKEEP;
 	}
+	
 	private void doDrawing(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g;
@@ -141,6 +143,14 @@ public class GraphSurface extends JPanel {
 		g2d.drawString(toplabel, labelx, labely);
 		labely=pxBottom-fm.getDescent();
 		g2d.drawString(bottomlabel, labelx, labely);
+		
+		// add some sub ticks
+		double tickincr=(MAX_pCO2-MIN_pCO2)/NUMTICKS;
+		int i;
+		for(i=0;i<NUMTICKS;++i) {
+			int y=yscale.scale(MIN_pCO2+i*tickincr);
+			g2d.drawLine(pxLeft, y, pxLeft+spacing/2, y);
+		}
 		
 		int stdX=xscale.scale(STD_PH);
 		int stdY=yscale.scale(STD_pCO2);
