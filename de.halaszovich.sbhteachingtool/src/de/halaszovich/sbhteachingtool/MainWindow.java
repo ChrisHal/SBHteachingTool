@@ -67,7 +67,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 	
 	//private static final String APPNAME = "Säure Base Demo";
 	private JPanel panelControls;
-	private JCheckBox chckbxLogScale;
+	private JCheckBox chckbxLogScalePCO2, chckbxLogScaleHCO3;
 
 	public double getBE() {
 		double be=Am+HCO3-MainWindow.tot;
@@ -339,10 +339,6 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 108, 290, 2);
 		panelControls.add(separator);
-
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 254, 290, 2);
-		panelControls.add(separator_1);
 		
 		this.sliderpCO2 = new JSlider(SwingConstants.HORIZONTAL,14,80,40);
 		sliderpCO2.setBounds(28, 158, 269, 52);
@@ -371,10 +367,14 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 				panelControls.add(sliderLabel2);
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
-				chckbxLogScale = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
-				chckbxLogScale.setBounds(38, 227, 175, 21);
-				chckbxLogScale.addItemListener(this);
-				panelControls.add(chckbxLogScale);
+				chckbxLogScalePCO2 = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
+				chckbxLogScalePCO2.setBounds(38, 227, 175, 21);
+				chckbxLogScalePCO2.addItemListener(this);
+				panelControls.add(chckbxLogScalePCO2);
+				chckbxLogScaleHCO3=new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScaleHCO3.text")); //$NON-NLS-1$ //$NON-NLS-2$
+				chckbxLogScaleHCO3.setBounds(38, 247, 175, 21);
+				chckbxLogScaleHCO3.addItemListener(this);
+				panelControls.add(chckbxLogScaleHCO3);
 		btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -453,8 +453,11 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		Object source = e.getItemSelectable();
-		if(source == this.chckbxLogScale) {
+		if(source == this.chckbxLogScalePCO2) {
 			this.graphSurface.pCO2_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
+			this.graphSurface.repaint();
+		} else if(source == this.chckbxLogScaleHCO3) {
+			this.graphSurface.HCO3_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
 			this.graphSurface.repaint();
 		}
 	}

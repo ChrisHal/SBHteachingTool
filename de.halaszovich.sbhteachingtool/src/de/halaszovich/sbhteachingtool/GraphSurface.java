@@ -25,7 +25,7 @@ public class GraphSurface extends JPanel {
 			MIN_BE=-15e-3,MAX_BE=15e-3, STD_BE=0,
 			MIN_HCO3=.008,MAX_HCO3=.041,STD_HCO3=.024;
 	private static final int NUMTICKS=5;
-	public boolean pCO2_uselogscale=false;
+	public boolean pCO2_uselogscale=false, HCO3_uselogscale=false;
 	private static final int CROSS_OFFSET=5, // offset to use when drawing a cross
 			POINTSTOKEEP=200; // number of data points that will be kept in buffer for trace drawing
 	private int AxisOffsetLeft, AxisOffsetBottom, AxisOffsetRight, AxisOffsetTop, LeftAxisGap;
@@ -148,19 +148,19 @@ public class GraphSurface extends JPanel {
 		double tickincr=(MAX_pCO2-MIN_pCO2)/NUMTICKS;
 		int i;
 		for(i=0;i<NUMTICKS;++i) {
-			int y=yscale.scale(MIN_pCO2+i*tickincr);
+			int y=(int)yscale.scale(MIN_pCO2+i*tickincr);
 			g2d.drawLine(pxLeft, y, pxLeft+spacing/2, y);
 		}
 		
-		int stdX=xscale.scale(STD_PH);
-		int stdY=yscale.scale(STD_pCO2);
+		int stdX=(int)xscale.scale(STD_PH);
+		int stdY=(int)yscale.scale(STD_pCO2);
 		g2d.setStroke(brokenline);
 		g2d.drawLine(stdX, pxTop, stdX, pxBottom);
 		g2d.drawLine(pxLeft,stdY,pxRight,stdY);
 		g2d.setStroke(oldstroke);
 		double xValue= -Math.log10(Parent.getHp()); // i.e. the pH
 		double yValue=Parent.getpCO2();
-		int pxX=xscale.scale(xValue), pxY=yscale.scale(yValue);
+		int pxX=(int)xscale.scale(xValue), pxY=(int)yscale.scale(yValue);
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.pco2,xscale,yscale);
 		
@@ -172,31 +172,29 @@ public class GraphSurface extends JPanel {
 		g2d.drawLine(pxLeft,pxTop,pxLeft,pxBottom);
 	
 		final String label=Messages.getString("GraphSurface.labelHCO3"); //$NON-NLS-1$
-		
-//		int textwidth=fm.stringWidth(label);
-//		AffineTransform at = new AffineTransform();
-//	    at.setToRotation(Math.PI / 4.0);
-//	    AffineTransform oldat=g2d.getTransform();
-//	    g2d.setTransform(at);
-//		g2d.drawString(label,pxRight-textwidth-CROSS_OFFSET, (pxBottom+pxTop)/2);
 		g2d.drawString(label,pxLeft+CROSS_OFFSET, (pxBottom+pxTop)/2);
-//		g2d.setTransform(oldat);
-		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3, false);
-		toplabel=String.format("%2.0fmM", 1000*MAX_HCO3); //$NON-NLS-1$
-		bottomlabel=String.format("%2.0fmM", 1000*MIN_HCO3); //$NON-NLS-1$
+		yscale=new CoordinateScaler(pxBottom,pxTop,MIN_HCO3,MAX_HCO3, HCO3_uselogscale);
+		toplabel=String.format("%2.0fmM", 1000.0*MAX_HCO3); //$NON-NLS-1$
+		bottomlabel=String.format("%2.0fmM", 1000.0*MIN_HCO3); //$NON-NLS-1$
 		labely=pxTop+fm.getAscent();
 		g2d.drawString(toplabel, labelx, labely);
 		labely=pxBottom-fm.getDescent();
 		g2d.drawString(bottomlabel, labelx, labely);
-		stdY=yscale.scale(STD_HCO3);
+		stdY=(int)yscale.scale(STD_HCO3);
 		g2d.setStroke(brokenline);
 		g2d.drawLine(stdX,pxTop,stdX,pxBottom);
 		g2d.drawLine(pxLeft,stdY,pxRight,stdY);
 		g2d.setStroke(oldstroke);
 		xValue=Parent.getHCO3();
-		pxY=yscale.scale(xValue);
+		pxY=(int)yscale.scale(xValue);
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.hco3,xscale,yscale);
+		// add some sub ticks
+		tickincr=(MAX_HCO3-MIN_HCO3)/NUMTICKS;
+		for(i=0;i<=NUMTICKS;++i) {
+			int y=(int)yscale.scale(MIN_HCO3+i*tickincr);
+			g2d.drawLine(pxLeft, y, pxLeft+spacing/2, y);
+		}
 		
 		// 3nd: bottom coordinate system, BE
 		g2d.setColor(Color.blue);
@@ -220,18 +218,22 @@ public class GraphSurface extends JPanel {
 		g2d.drawString(toplabel, labelx, labely);
 		labely=pxBottom-fm.getDescent();
 		g2d.drawString(bottomlabel, labelx, labely);	
-		stdY=yscale.scale(STD_BE);
+		stdY=(int)yscale.scale(STD_BE);
 		g2d.drawLine(pxLeft,stdY,pxRight,stdY);
 		g2d.setStroke(oldstroke);
 		yValue=Parent.getBE();
-		pxY=yscale.scale(yValue);
+		pxY=(int)yscale.scale(yValue);
 		g2d.drawLine(pxLeft, pxBottom, pxLeft, pxTop);
 		g2d.drawLine(pxLeft, pxBottom, pxRight, pxBottom);
+		// add some sub ticks
+		tickincr=(MAX_BE-MIN_BE)/NUMTICKS;
+		for(i=1;i<=NUMTICKS;++i) {
+			int y=(int)yscale.scale(MIN_BE+i*tickincr);
+			g2d.drawLine(pxLeft, y, pxLeft+spacing/2, y);
+		}
 		
 		drawCross(g2d,pxX,pxY);
 		drawTrace(g2d,this.ph,this.be,xscale,yscale);
-		
-		// TODO: add tics, if we think we need them
 	}
 
 	@Override

@@ -5,11 +5,11 @@ public class CoordinateScaler {
 	double x0,x1; // extend of system in value plane
 	double log_x1x0;
 	boolean isLog;
-	public int scale(double x) {
+	public double scale(double x) {
 		if(isLog) {
-			return (int)(Math.log10(x/x0)/log_x1x0*(px1-px0)+px0);
+			return Math.log10(x/x0)/log_x1x0*(px1-px0)+px0;
 		} else {
-			return (int)((x-x0)/(x1-x0)*(px1-px0)+px0);
+			return (x-x0)/(x1-x0)*(px1-px0)+px0;
 		}
 		
 	}
