@@ -24,6 +24,7 @@ public class GraphSurface extends JPanel {
 			MIN_pCO2=13,MAX_pCO2=80, STD_pCO2=40,
 			MIN_BE=-15e-3,MAX_BE=15e-3, STD_BE=0,
 			MIN_HCO3=.008,MAX_HCO3=.041,STD_HCO3=.024;
+	public boolean pCO2_uselogscale=false;
 	private static final int CROSS_OFFSET=5, // offset to use when drawing a cross
 			POINTSTOKEEP=200; // number of data points that will be kept in buffer for trace drawing
 	private int AxisOffsetLeft, AxisOffsetBottom, AxisOffsetRight, AxisOffsetTop, LeftAxisGap;
@@ -123,7 +124,7 @@ public class GraphSurface extends JPanel {
 		g2d.drawLine(pxLeft, pxTop, pxLeft, pxBottom);
 		g2d.drawString("pCO2", pxLeft+spacing, (pxBottom+pxTop)/2); //$NON-NLS-1$
 		CoordinateScaler xscale=new CoordinateScaler(pxLeft,pxRight,MIN_PH,MAX_PH, false);
-		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2, false);
+		CoordinateScaler yscale=new CoordinateScaler(pxBottom,pxTop,MIN_pCO2,MAX_pCO2, pCO2_uselogscale);
 		
 		// add values to axis
 		leftlabel=String.format("%.1f",MIN_PH); //$NON-NLS-1$

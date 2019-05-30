@@ -4,7 +4,9 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,7 +37,8 @@ import java.util.Hashtable;
 import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 
-public class MainWindow extends JFrame implements ChangeListener {
+
+public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 	/**
 	 * 
 	 */
@@ -64,6 +67,7 @@ public class MainWindow extends JFrame implements ChangeListener {
 	
 	//private static final String APPNAME = "Säure Base Demo";
 	private JPanel panelControls;
+	private JCheckBox chckbxLogScale;
 
 	public double getBE() {
 		double be=Am+HCO3-MainWindow.tot;
@@ -367,8 +371,9 @@ public class MainWindow extends JFrame implements ChangeListener {
 				panelControls.add(sliderLabel2);
 				sliderLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 				
-				JCheckBox chckbxLogScale = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
+				chckbxLogScale = new JCheckBox(ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.chckbxLogScale.text")); //$NON-NLS-1$ //$NON-NLS-2$
 				chckbxLogScale.setBounds(38, 227, 175, 21);
+				chckbxLogScale.addItemListener(this);
 				panelControls.add(chckbxLogScale);
 		btnReset.addActionListener(new ActionListener() {
 			@Override
@@ -443,4 +448,17 @@ public class MainWindow extends JFrame implements ChangeListener {
 		frmSBDemo.getContentPane().add(graphSurface, gbc_panel); // use this line for working app
 		
 	}
+
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Object source = e.getItemSelectable();
+		if(source == this.chckbxLogScale) {
+			this.graphSurface.pCO2_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
+			this.updateValues();
+			this.updateValueDisplays();
+			this.graphSurface.grapData();
+;		}
+	}
+
 }
