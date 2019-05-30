@@ -83,8 +83,8 @@ public class GraphSurface extends JPanel {
 		g2d.draw(p);
 	}
 	
-	// grap data from parent MainWindow and store it in local ring buffer
-	public void grapData() {
+	// Grab data from parent MainWindow and store it in local ring buffer
+	public void grabData() {
 		ph[insertPos]=-Math.log10(Parent.getHp());
 		pco2[insertPos]=Parent.getpCO2();
 		be[insertPos]=Parent.getBE();

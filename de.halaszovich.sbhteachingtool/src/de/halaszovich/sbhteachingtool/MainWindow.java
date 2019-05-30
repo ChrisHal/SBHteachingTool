@@ -223,7 +223,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
         	this.CO2=val/CO2concToPressure;
         }
         this.updateValues();
-        this.graphSurface.grapData();
+        this.graphSurface.grabData();
         this.updateValueDisplays();
         }
 
@@ -457,7 +457,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 			this.graphSurface.pCO2_uselogscale = e.getStateChange()==java.awt.event.ItemEvent.SELECTED;
 			this.updateValues();
 			this.updateValueDisplays();
-			this.graphSurface.grapData();
+			this.graphSurface.grabData();
 ;		}
 	}
 
