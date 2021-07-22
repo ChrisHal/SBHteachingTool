@@ -46,7 +46,8 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 	public static final String 
 		APP_NAME=Messages.getString("MainWindow.AppNAme"), //$NON-NLS-1$ // used eclipse's mechanism for this one
 		APP_VERSION=Messages.getString("MainWindow.APP_VERSION"), //$NON-NLS-1$
-		COPYRIGHT="(C) Christian R. Halaszovich", //$NON-NLS-1$
+		COPYRIGHT="(C) 2021 Christian R. Halaszovich", //$NON-NLS-1$
+		LICENSE=Messages.getString("License"), //$NON-NLS-1$
 		INFO_SLIDERSBE=ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERSBE"); //$NON-NLS-1$ //$NON-NLS-2$
 	static final String INFO_SLIDERCO2 = ResourceBundle.getBundle("de.halaszovich.sbhteachingtool.messages").getString("MainWindow.INFO_SLIDERCO2");; //$NON-NLS-1$ //$NON-NLS-2$
 	private JFrame frmSBDemo;
@@ -410,7 +411,7 @@ public class MainWindow extends JFrame implements ChangeListener, ItemListener {
 				JOptionPane.showMessageDialog(frmSBDemo,
 						String.format(Messages.getString("MainWindow.VersionFormatStr"), MainWindow.APP_NAME,  //$NON-NLS-1$
 								MainWindow.APP_VERSION, System.getProperty("java.version"),
-								MainWindow.COPYRIGHT),
+								MainWindow.COPYRIGHT, MainWindow.LICENSE),
 						Messages.getString("MainWindow.TitleAbout"),JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 			}
 		});
